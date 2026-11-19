@@ -4,6 +4,7 @@ import { hasImage, urlFor } from "@/lib/sanity/image";
 import type { Plan, PlanSection } from "@/lib/sanity/types";
 import { formatPrice } from "@/lib/site";
 import { emptyNote, section as sectionPadding, sectionHeadCenter, sectionLabel, sectionSubCenter, sectionTitle } from "@/lib/ui";
+import { EagleBackground } from "./EagleBackground";
 import { PlanSlider } from "./PlanSlider";
 import { PlanCard, type PlanCardData } from "./PlanCard";
 
@@ -12,6 +13,8 @@ type Props = {
   section: PlanSection;
   /** Inner pages render their own <h1>, so the section header can be hidden. */
   showHeader?: boolean;
+  /** Show the animated eagle background (home and about pages). */
+  eagles?: boolean;
 };
 
 export function toPlanCard(plan: Plan, locale: Locale, featuredId?: string): PlanCardData {
@@ -43,7 +46,7 @@ export function bestSellerId(plans: Plan[]) {
   return top?._id;
 }
 
-export async function PricingSection({ plans, section, showHeader = true }: Props) {
+export async function PricingSection({ plans, section, showHeader = true, eagles = false }: Props) {
   const { locale, ui, tr } = await getI18n();
   const featuredId = bestSellerId(plans);
   const labels = {
@@ -57,7 +60,12 @@ export async function PricingSection({ plans, section, showHeader = true }: Prop
   };
 
   return (
-    <section id="plans" className={`${sectionPadding} scroll-mt-20 bg-bg`}>
+    <section id="plans" className={`${sectionPadding} relative isolate scroll-mt-20 overflow-hidden bg-bg`}>
+      {eagles && (
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <EagleBackground />
+        </div>
+      )}
       {showHeader ? (
         <div className={sectionHeadCenter}>
           <span className={sectionLabel}>{ui.plans.label}</span>
