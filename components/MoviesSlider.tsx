@@ -2,24 +2,24 @@ import { MoviesTrack } from "@/components/MoviesTrack";
 import { getI18n } from "@/lib/locale";
 import { sectionHeadCenter, sectionLabel, sectionSubCenter, sectionTitle } from "@/lib/ui";
 
-// Posters in public/movies/. Filenames contain spaces and Polish characters, so they are URL-encoded.
+// Posters in public/movies/ (WebP, 360px wide). Filenames contain spaces and Polish characters, so they are URL-encoded.
 const MOVIES: { file: string; title: string }[] = [
-  { file: "game of thrones.jpeg", title: "Game of Thrones" },
-  { file: "Boże Ciało.jpeg", title: "Boże Ciało" },
-  { file: "iptv peaky balnders netflex free.jpeg", title: "Peaky Blinders" },
-  { file: "the hobbit.jpeg", title: "The Hobbit" },
-  { file: "Chlopi.jpeg", title: "Chłopi" },
-  { file: "vikings.jpeg", title: "Vikings" },
-  { file: "aquaman movies iptv.jpeg", title: "Aquaman" },
-  { file: "Kawulski.jpeg", title: "Jak zostałem gangsterem" },
-  { file: "iptv netflix dark.jpeg", title: "Dark" },
-  { file: "titanic  movies free .jpeg", title: "Titanic" },
-  { file: "Bogowie .jpeg", title: "Bogowie" },
-  { file: "movies lucifer free.jpeg", title: "Lucifer" },
-  { file: "troy movies.jpeg", title: "Troy" },
-  { file: "movies 1899.jpeg", title: "1899" },
-  { file: "unchart movies iptv.jpeg", title: "Uncharted" },
-  { file: "juman fro free.jpeg", title: "Jumanji" },
+  { file: "game of thrones.webp", title: "Game of Thrones" },
+  { file: "Boże Ciało.webp", title: "Boże Ciało" },
+  { file: "iptv peaky balnders netflex free.webp", title: "Peaky Blinders" },
+  { file: "the hobbit.webp", title: "The Hobbit" },
+  { file: "Chlopi.webp", title: "Chłopi" },
+  { file: "vikings.webp", title: "Vikings" },
+  { file: "aquaman movies iptv.webp", title: "Aquaman" },
+  { file: "Kawulski.webp", title: "Jak zostałem gangsterem" },
+  { file: "iptv netflix dark.webp", title: "Dark" },
+  { file: "titanic  movies free .webp", title: "Titanic" },
+  { file: "Bogowie .webp", title: "Bogowie" },
+  { file: "movies lucifer free.webp", title: "Lucifer" },
+  { file: "troy movies.webp", title: "Troy" },
+  { file: "movies 1899.webp", title: "1899" },
+  { file: "unchart movies iptv.webp", title: "Uncharted" },
+  { file: "juman fro free.webp", title: "Jumanji" },
 ];
 
 export async function MoviesSlider() {
