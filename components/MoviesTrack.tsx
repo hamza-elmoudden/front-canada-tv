@@ -53,14 +53,14 @@ export function MoviesTrack({ movies }: { movies: Movie[] }) {
           src={`/movies/${encodeURIComponent(m.file)}`}
           alt=""
           fill
-          sizes="100vw"
+          unoptimized
           className={`scale-125 object-cover blur-2xl transition-opacity duration-700 ${i === active ? "opacity-45" : "opacity-0"}`}
         />
       ))}
       <div className="absolute inset-0 bg-linear-to-b from-bg via-bg/30 to-bg" />
     </div>
     <div ref={wrap} className="relative overflow-x-clip before:pointer-events-none before:absolute before:inset-y-0 before:left-0 before:z-20 before:w-30 before:bg-linear-to-r before:from-bg before:to-transparent after:pointer-events-none after:absolute after:inset-y-0 after:right-0 after:z-20 after:w-30 after:bg-linear-to-l after:from-bg after:to-transparent">
-      <div className="flex w-max animate-scroll-rtl [animation-duration:18s] gap-5 py-12 hover:[animation-play-state:paused] motion-reduce:animate-none">
+      <div className="flex w-max animate-scroll-rtl [animation-duration:40s] gap-5 py-12 hover:[animation-play-state:paused] motion-reduce:animate-none">
         {loop.map((m, i) => (
           <figure
             ref={(n) => {
@@ -75,7 +75,10 @@ export function MoviesTrack({ movies }: { movies: Movie[] }) {
                 src={`/movies/${encodeURIComponent(m.file)}`}
                 alt={i < movies.length ? m.title : ""}
                 fill
-                sizes="180px"
+                unoptimized
+                // The marquee slides posters in from off-screen, so lazy loading shows empty boxes.
+                loading="eager"
+                fetchPriority={i < 6 ? "high" : "low"}
                 className="rounded-[14px] object-cover"
               />
             </div>
