@@ -54,8 +54,12 @@ export function currencyCode(currency?: string) {
   return CURRENCY_CODES[c.toLowerCase()] ?? CURRENCY_CODES[c] ?? (c.toUpperCase() || "PLN");
 }
 
+const CURRENCY_SYMBOLS: Record<string, string> = { PLN: "zł", EUR: "€", USD: "$", GBP: "£" };
+
+/** Price with its currency symbol; plans without a currency are priced in złoty. */
 export function formatPrice(price?: number, currency?: string) {
   if (price == null) return "—";
   const amount = Number.isInteger(price) ? String(price) : price.toFixed(2);
-  return currency ? `${amount} ${currency}` : amount;
+  const code = currencyCode(currency);
+  return `${amount} ${CURRENCY_SYMBOLS[code] ?? code}`;
 }
