@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { JsonLd } from "@/components/JsonLd";
 import { CategoryChips, formatDate } from "@/components/PostCard";
 import { getPost, getPostSlugs } from "@/lib/data";
@@ -35,7 +36,30 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog/[slug
   };
 }
 
-export default async function PostPage({ params }: PageProps<"/[lang]/blog/[slug]">) {
+// `params` is URL data: with partialPrefetching it must be read inside
+// <Suspense> so the route's App Shell stays shared across every post link.
+export default function PostPage({ params }: PageProps<"/[lang]/blog/[slug]">) {
+  return (
+    <article className={sectionTop}>
+      <div className="mx-auto max-w-[760px]">
+        <Suspense fallback={<PostSkeleton />}>
+          <PostDetails params={params} />
+        </Suspense>
+      </div>
+    </article>
+  );
+}
+
+function PostSkeleton() {
+  return (
+    <div aria-busy="true">
+      <div className="mb-6 h-10 w-3/4 animate-pulse rounded-lg bg-teal/10" />
+      <div className="aspect-video animate-pulse rounded-[20px] border border-teal/20" />
+    </div>
+  );
+}
+
+async function PostDetails({ params }: Pick<PageProps<"/[lang]/blog/[slug]">, "params">) {
   const { slug } = await params;
   const [{ locale, ui, tr, href }, post] = await Promise.all([getI18n(), getPost(slug)]);
   if (!post) notFound();
@@ -62,43 +86,39 @@ export default async function PostPage({ params }: PageProps<"/[lang]/blog/[slug
           keywords: post.tags?.length ? post.tags.join(", ") : undefined,
         }}
       />
-      <article className={sectionTop}>
-        <div className="mx-auto max-w-[760px]">
-          <Link href={href("/blog")} className={backLink}>
-            {ui.blog.back}
-          </Link>
-          <div className="mb-4 flex flex-wrap items-center gap-2 text-[0.78rem] text-muted">
-            <CategoryChips post={post} locale={locale} />
-            {post.publishedAt && <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, locale)}</time>}
-            {post.author?.name && (
-              <span>
-                · {ui.blog.by} {post.author.name}
-              </span>
-            )}
-          </div>
-          <h1 className={sectionTitle}>{title}</h1>
-          {tr(post.excerpt) && (
-            <p className={`${proseText} mb-8 text-muted`}>
-              {tr(post.excerpt)}
-            </p>
-          )}
-          {cover && (
-            <div className="relative mb-10 aspect-video overflow-hidden rounded-[20px] border border-teal/20">
-              <Image src={cover} alt={title} fill priority sizes="(max-width: 800px) 100vw, 760px" />
-            </div>
-          )}
-          <div className={`${proseText} text-[1.05rem]`}>{tr(post.body)}</div>
-          {post.tags?.length ? (
-            <div className="mt-10 flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <span key={tag} className={chip}>
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          ) : null}
+      <Link href={href("/blog")} className={backLink}>
+        {ui.blog.back}
+      </Link>
+      <div className="mb-4 flex flex-wrap items-center gap-2 text-[0.78rem] text-muted">
+        <CategoryChips post={post} locale={locale} />
+        {post.publishedAt && <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, locale)}</time>}
+        {post.author?.name && (
+          <span>
+            · {ui.blog.by} {post.author.name}
+          </span>
+        )}
+      </div>
+      <h1 className={sectionTitle}>{title}</h1>
+      {tr(post.excerpt) && (
+        <p className={`${proseText} mb-8 text-muted`}>
+          {tr(post.excerpt)}
+        </p>
+      )}
+      {cover && (
+        <div className="relative mb-10 aspect-video overflow-hidden rounded-[20px] border border-teal/20">
+          <Image src={cover} alt={title} fill priority sizes="(max-width: 800px) 100vw, 760px" />
         </div>
-      </article>
+      )}
+      <div className={`${proseText} text-[1.05rem]`}>{tr(post.body)}</div>
+      {post.tags?.length ? (
+        <div className="mt-10 flex flex-wrap gap-2">
+          {post.tags.map((tag) => (
+            <span key={tag} className={chip}>
+              #{tag}
+            </span>
+          ))}
+        </div>
+      ) : null}
     </>
   );
 }
