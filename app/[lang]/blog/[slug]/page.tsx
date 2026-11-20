@@ -5,30 +5,29 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { JsonLd } from "@/components/JsonLd";
 import { CategoryChips, formatDate } from "@/components/PostCard";
-import { getPost, getPostSlugs } from "@/lib/data";
+import { getPost } from "@/lib/data";
 import { localePath } from "@/lib/i18n";
 import { getI18n } from "@/lib/locale";
 import { backLink, chip, proseText, sectionTitle, sectionTop } from "@/lib/ui";
 import { ORG_ID } from "@/lib/jsonld";
 import { siteUrl } from "@/lib/sanity/env";
 import { hasImage, urlFor } from "@/lib/sanity/image";
+import { getRoute, slugParams } from "@/lib/routes";
 import { buildMetadata } from "@/lib/seo";
 
-const PLACEHOLDER = "__placeholder__";
-
 export async function generateStaticParams() {
-  const slugs = await getPostSlugs();
-  return (slugs.length ? slugs : [PLACEHOLDER]).map((slug) => ({ slug }));
+  return slugParams("blog");
 }
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/blog/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const [{ locale, tr }, post] = await Promise.all([getI18n(), getPost(slug)]);
+  const [{ locale, tr }, post, route] = await Promise.all([getI18n(), getPost(slug), getRoute(`/blog/${slug}`)]);
   if (!post) return {};
   const meta = buildMetadata(post.seo, {
     title: tr(post.title),
     description: tr(post.excerpt),
     path: `/blog/${slug}`,
+    locales: route?.locales,
   }, locale);
   return {
     ...meta,

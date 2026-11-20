@@ -6,30 +6,27 @@ import { Suspense } from "react";
 import { JsonLd } from "@/components/JsonLd";
 import { OrderForm } from "@/components/OrderForm";
 import { toPlanCard } from "@/components/PricingSection";
-import { getContactInfo, getPlan, getPlanSlugs } from "@/lib/data";
+import { getContactInfo, getPlan } from "@/lib/data";
 import { getI18n } from "@/lib/locale";
 import { productNode } from "@/lib/jsonld";
+import { getRoute, slugParams } from "@/lib/routes";
 import { buildMetadata } from "@/lib/seo";
 import { whatsappLink } from "@/lib/site";
 import { backLink, cardOldPrice, cardPrice, cardSave, proseText, sectionLabel, sectionTitle, sectionTop } from "@/lib/ui";
 
-// Cache Components needs at least one param at build time; the placeholder
-// covers an empty dataset and resolves to notFound().
-const PLACEHOLDER = "__placeholder__";
-
 export async function generateStaticParams() {
-  const slugs = await getPlanSlugs();
-  return (slugs.length ? slugs : [PLACEHOLDER]).map((slug) => ({ slug }));
+  return slugParams("plans");
 }
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/plans/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const [{ locale, tr }, plan] = await Promise.all([getI18n(), getPlan(slug)]);
+  const [{ locale, tr }, plan, route] = await Promise.all([getI18n(), getPlan(slug), getRoute(`/plans/${slug}`)]);
   if (!plan) return {};
   return buildMetadata(plan.seo, {
     title: tr(plan.title),
     description: tr(plan.Shortdescription),
     path: `/plans/${slug}`,
+    locales: route?.locales,
   }, locale);
 }
 
