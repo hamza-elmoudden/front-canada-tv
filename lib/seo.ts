@@ -1,23 +1,48 @@
 import type { Metadata } from "next";
-import { LOCALES, localePath, t, type Locale } from "./i18n";
+import { LOCALES, localePath, preferredLocale, t, type Locale } from "./i18n";
 import { siteUrl } from "./sanity/env";
 import { hasImage, urlFor } from "./sanity/image";
 import type { Seo } from "./sanity/types";
 import { SITE_NAME } from "./site";
 
-/** `path` is the locale-less app path, e.g. "/plans". */
-type Fallback = { title?: string; description?: string; path: string };
+/**
+ * `path` is the locale-less app path, e.g. "/plans".
+ * `locales` lists the languages that have their own content (default: both). A page viewed in
+ * a language it lacks only shows fallback text, so it canonicalizes to a language that has it.
+ */
+type Fallback = { title?: string; description?: string; path: string; locales?: readonly Locale[] };
+
+/**
+ * Resolves the editor-written `seo.canonicalUrl` for one language. Editors enter
+ * locale-less paths ("/about"), which would point at a redirect, so same-site URLs
+ * without a language prefix get the page's language added. External URLs are kept.
+ */
+export function resolveCanonical(raw: string | null | undefined, locale: Locale): string | undefined {
+  const value = raw?.trim();
+  if (!value) return undefined;
+  let url: URL;
+  try {
+    url = new URL(value, siteUrl);
+  } catch {
+    return undefined;
+  }
+  if (url.origin !== new URL(siteUrl).origin) return url.href;
+  const path = url.pathname.replace(/\/$/, "") || "/";
+  const localized = /^\/(en|pl)(\/|$)/.test(path) ? path : localePath(locale, path);
+  return `${siteUrl}${localized}${url.search}`;
+}
 
 /** Maps a Sanity `seo` object onto Next metadata, with page-level fallbacks. */
 export function buildMetadata(seo: Seo | undefined, fallback: Fallback, locale: Locale): Metadata {
   const tr = (f: Parameters<typeof t>[0]) => t(f, locale);
   const title = tr(seo?.metaTitle) || fallback.title || SITE_NAME;
   const description = tr(seo?.metaDescription) || fallback.description || undefined;
-  const canonical = seo?.canonicalUrl || `${siteUrl}${localePath(locale, fallback.path)}`;
-  const languages: Record<string, string> = Object.fromEntries(
-    LOCALES.map((l) => [l, `${siteUrl}${localePath(l, fallback.path)}`]),
-  );
-  languages["x-default"] = languages.en;
+  const available = fallback.locales?.length ? fallback.locales : LOCALES;
+  const url = (l: Locale) => `${siteUrl}${localePath(l, fallback.path)}`;
+  const canonicalLocale = available.includes(locale) ? locale : preferredLocale(available);
+  const canonical = resolveCanonical(seo?.canonicalUrl, canonicalLocale) || url(canonicalLocale);
+  const languages: Record<string, string> = Object.fromEntries(available.map((l) => [l, url(l)]));
+  languages["x-default"] = url(preferredLocale(available));
   const ogImage = hasImage(seo?.ogImage)
     ? urlFor(seo.ogImage).width(1200).height(630).fit("crop").url()
     : undefined;

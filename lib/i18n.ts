@@ -25,6 +25,14 @@ export function localePath(locale: Locale, path: string) {
   return `/${locale}${path}`;
 }
 
+/**
+ * Language that `x-default` and cross-language canonicals point to:
+ * DEFAULT_LOCALE when the page exists in it, otherwise the first available one.
+ */
+export function preferredLocale(available: readonly Locale[]): Locale {
+  return available.includes(DEFAULT_LOCALE) ? DEFAULT_LOCALE : (available[0] ?? DEFAULT_LOCALE);
+}
+
 /** Swaps the locale segment of a pathname (used by the language switcher). */
 export function switchLocalePath(pathname: string, to: Locale) {
   const rest = pathname.replace(/^\/(en|pl)(?=\/|$)/, "");
@@ -140,7 +148,18 @@ const dictionary = {
       contact: "Contact Us",
       rights: "All rights reserved",
       tagline: "Unlimited Entertainment 🎬",
+      sitemap: "Sitemap",
       desc: "Premium IPTV with diverse content and effortless streaming on any screen.",
+    },
+    sitemap: {
+      label: "Sitemap",
+      title: "Sitemap",
+      sub: "Every page of our site in one place: plans, guides and help.",
+      pages: "Pages",
+      plans: "Plans",
+      blog: "Blog articles",
+      otherLanguage: "Available in Polish only",
+      updated: "Updated",
     },
     notFound: {
       title: "Page not found",
@@ -256,7 +275,18 @@ const dictionary = {
       contact: "Kontakt",
       rights: "Wszelkie prawa zastrzeżone",
       tagline: "Rozrywka bez limitu 🎬",
+      sitemap: "Mapa strony",
       desc: "Premium IPTV z bogatą ofertą i wygodnym oglądaniem na każdym ekranie.",
+    },
+    sitemap: {
+      label: "Mapa strony",
+      title: "Mapa strony",
+      sub: "Wszystkie strony serwisu w jednym miejscu: pakiety, poradniki i pomoc.",
+      pages: "Strony",
+      plans: "Pakiety",
+      blog: "Artykuły na blogu",
+      otherLanguage: "Dostępne tylko po angielsku",
+      updated: "Aktualizacja",
     },
     notFound: {
       title: "Nie znaleziono strony",

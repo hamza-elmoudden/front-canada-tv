@@ -51,7 +51,6 @@ export const PLAN_BY_SLUG_QUERY = `*[_type == "plan" && slug.current == $slug][0
   ${PLAN_FIELDS}
 }`;
 
-export const PLAN_SLUGS_QUERY = `*[_type == "plan" && defined(slug.current)].slug.current`;
 
 const POST_CARD_FIELDS = `
   _id, title, "slug": slug.current, coverImage,
@@ -73,4 +72,22 @@ export const POST_BY_SLUG_QUERY = `${PUBLISHED_POSTS}[slug.current == $slug][0] 
   ${POST_CARD_FIELDS}, body, ${SEO}
 }`;
 
-export const POST_SLUGS_QUERY = `${PUBLISHED_POSTS}.slug.current`;
+// ── Route index (sitemaps + generateStaticParams) ─────────
+// Translations are per field, so a document "exists" in a language when its
+// title and main text are filled in that language (see lib/routes.ts).
+const HAS = (field: string, l: string) => `(length(title.${l}) > 0 && length(${field}.${l}) > 0) == true`;
+const INDEXING = `"noIndex": seo.noIndex == true, "canonicalUrl": seo.canonicalUrl`;
+
+export const ROUTE_INDEX_QUERY = `{
+  "singletons": *[_type in ["homePage", "aboutPage", "faqPage", "blogPage", "contactInfo"]] {
+    _type, _updatedAt, ${INDEXING}
+  },
+  "plans": *[_type == "plan" && defined(slug.current)] | order(price asc) {
+    "slug": slug.current, _updatedAt, title, price, currency,
+    "en": ${HAS("description", "en")}, "pl": ${HAS("description", "pl")}, ${INDEXING}
+  },
+  "posts": ${PUBLISHED_POSTS} | order(publishedAt desc) {
+    "slug": slug.current, _updatedAt, publishedAt, title,
+    "en": ${HAS("body", "en")}, "pl": ${HAS("body", "pl")}, ${INDEXING}
+  }
+}`;

@@ -104,3 +104,13 @@ export type Post = {
   body?: LocaleValue;
   seo?: Seo;
 };
+
+/** Shape of ROUTE_INDEX_QUERY (only what sitemaps and static params need). */
+type Indexing = { _updatedAt: string; noIndex: boolean; canonicalUrl?: string | null };
+type Availability = { en: boolean; pl: boolean };
+
+export type RouteIndexData = {
+  singletons: (Indexing & { _type: "homePage" | "aboutPage" | "faqPage" | "blogPage" | "contactInfo" })[];
+  plans: (Indexing & Availability & { slug: string; title?: LocaleValue; price?: number; currency?: string })[];
+  posts: (Indexing & Availability & { slug: string; title?: LocaleValue; publishedAt?: string })[];
+};

@@ -14,6 +14,7 @@ import type {
   Plan,
   PlanSection,
   Post,
+  RouteIndexData,
 } from "./sanity/types";
 
 export const getHomePage = () => sanityFetch<HomePage>(q.HOME_PAGE_QUERY);
@@ -36,9 +37,6 @@ export const getPlans = async () =>
 export const getPlan = (slug: string) =>
   sanityFetch<Plan | null>(q.PLAN_BY_SLUG_QUERY, { slug });
 
-export const getPlanSlugs = async () =>
-  (await sanityFetch<string[] | null>(q.PLAN_SLUGS_QUERY)) ?? [];
-
 export async function getPostsPage(page: number, perPage: number) {
   const start = (page - 1) * perPage;
   const res = await sanityFetch<{ total: number; posts: Post[] } | null>(
@@ -51,5 +49,6 @@ export async function getPostsPage(page: number, perPage: number) {
 export const getPost = (slug: string) =>
   sanityFetch<Post | null>(q.POST_BY_SLUG_QUERY, { slug });
 
-export const getPostSlugs = async () =>
-  (await sanityFetch<string[] | null>(q.POST_SLUGS_QUERY)) ?? [];
+/** Raw data behind lib/routes.ts; use getRouteIndex() there instead of calling this directly. */
+export const getRouteIndexData = async () =>
+  (await sanityFetch<RouteIndexData | null>(q.ROUTE_INDEX_QUERY)) ?? { singletons: [], plans: [], posts: [] };

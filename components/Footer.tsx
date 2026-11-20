@@ -91,7 +91,12 @@ export async function Footer({ footer, contact, nav, year }: Props) {
         <span className="text-[0.82rem] text-muted">
           © {year} {SITE_NAME} — {ui.footer.rights}
         </span>
-        <span className="text-[0.78rem] text-teal">{ui.footer.tagline}</span>
+        <span className="flex flex-wrap items-center gap-4 max-md:justify-center">
+          <Link href={href("/sitemap")} className="text-[0.82rem] text-muted transition-colors duration-200 hover:text-teal">
+            {ui.footer.sitemap}
+          </Link>
+          <span className="text-[0.78rem] text-teal">{ui.footer.tagline}</span>
+        </span>
       </div>
     </footer>
   );

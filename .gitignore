@@ -17,6 +17,12 @@
 /.next/
 /out/
 
+# fiel
+desing_exsample/
+schema_query/
+CLAUDE.md
+.gitignore
+
 # production
 /build
 
