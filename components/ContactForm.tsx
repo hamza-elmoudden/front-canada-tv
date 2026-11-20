@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { createSubmission, type FormState } from "@/app/actions";
 import type { Dict, Locale } from "@/lib/i18n";
+import { PhoneField } from "@/components/PhoneField";
 import { btnPrimary, fieldInput, fieldLabel, formCard, formGrid, formMsgErr, formMsgOk, honeypot } from "@/lib/ui";
 
 const initial: FormState = { status: "idle", message: "" };
@@ -35,10 +36,7 @@ export function ContactForm({ locale, labels }: { locale: Locale; labels: Dict["
           <label className={fieldLabel} htmlFor="c-fullname">{ui.contact.fullname} *</label>
           <input className={fieldInput} id="c-fullname" name="fullname" required autoComplete="name" maxLength={200} />
         </div>
-        <div>
-          <label className={fieldLabel} htmlFor="c-phone">{ui.contact.phone} *</label>
-          <input className={fieldInput} id="c-phone" name="phone" type="tel" required autoComplete="tel" maxLength={40} />
-        </div>
+        <PhoneField id="c-phone" label={ui.contact.phone} codeLabel={ui.contact.phoneCode} />
         <div>
           <label className={fieldLabel} htmlFor="c-email">{ui.contact.email} *</label>
           <input className={fieldInput} id="c-email" name="email" type="email" required autoComplete="email" maxLength={200} />

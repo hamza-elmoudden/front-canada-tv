@@ -90,11 +90,9 @@ async function PlanDetails({ params }: Pick<PageProps<"/[lang]/plans/[slug]">, "
               </span>
             )}
           </div>
-          {card.shortDescription && <p className={`${proseText} text-muted`}>{card.shortDescription}</p>}
-          {card.description && card.description !== card.shortDescription && (
-            <p className={`${proseText} mt-6`}>
-              {card.description}
-            </p>
+          {/* Full description only; the short one is for the plan cards (falls back if no description is set). */}
+          {(card.description || card.shortDescription) && (
+            <p className={proseText}>{card.description || card.shortDescription}</p>
           )}
         </div>
 
