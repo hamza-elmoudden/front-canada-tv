@@ -13,6 +13,7 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="robots" content="noindex"/>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2"/>
         <title>XML Sitemap · IPTV Pro</title>
         <style>
           :root { --bg:#0d0810; --fg:#f0e8ea; --muted:#bfa5a4; --crimson:#dc143c; --teal:#0093d5; --teal-light:#5cb6d6; --violet:#5c4b8a; --line:rgb(0 147 213 / .2); }
