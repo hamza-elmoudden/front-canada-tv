@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { createOrder, type FormState } from "@/app/actions";
 import type { Dict, Locale } from "@/lib/i18n";
+import { PhoneField } from "@/components/PhoneField";
 import { btnOutline, btnPrimary, fieldInput, fieldLabel, formCard, formGrid, formMsgErr, formMsgOk, honeypot } from "@/lib/ui";
 
 const initial: FormState = { status: "idle", message: "" };
@@ -43,10 +44,7 @@ export function OrderForm({ planId, whatsappHref, locale, labels }: Props) {
             <label className={fieldLabel} htmlFor="order-fullname">{ui.order.fullname} *</label>
             <input className={fieldInput} id="order-fullname" name="fullname" required autoComplete="name" maxLength={200} />
           </div>
-          <div>
-            <label className={fieldLabel} htmlFor="order-phone">{ui.order.phone} *</label>
-            <input className={fieldInput} id="order-phone" name="phone" type="tel" required autoComplete="tel" maxLength={40} />
-          </div>
+          <PhoneField id="order-phone" label={ui.order.phone} codeLabel={ui.order.phoneCode} />
           <div>
             <label className={fieldLabel} htmlFor="order-email">{ui.order.email} *</label>
             <input className={fieldInput} id="order-email" name="email" type="email" required autoComplete="email" maxLength={200} />
