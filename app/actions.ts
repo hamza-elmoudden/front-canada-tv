@@ -2,6 +2,7 @@
 
 import { client } from "@/lib/sanity/client";
 import { DEFAULT_LOCALE, getDict, isLocale } from "@/lib/i18n";
+import { formatPhone } from "@/lib/phone";
 
 export type FormState = { status: "idle" | "success" | "error"; message: string };
 
@@ -23,6 +24,15 @@ function validateContact(ui: ReturnType<typeof getDict>, fullname: string, phone
   return null;
 }
 
+/** Combines the country select and the number input into "+48 123456789" (empty if invalid). */
+function phoneField(form: FormData) {
+  return formatPhone(field(form, "phoneCountry", 2), field(form, "phone", 40)) ?? "";
+}
+
+function hasPhone(form: FormData) {
+  return field(form, "phone", 40) !== "";
+}
+
 /** Creates an `order` document referencing the chosen plan. */
 export async function createOrder(_prev: FormState, form: FormData): Promise<FormState> {
   const ui = dictFor(form);
@@ -30,10 +40,11 @@ export async function createOrder(_prev: FormState, form: FormData): Promise<For
   if (field(form, "website")) return { status: "success", message: ui.order.success };
 
   const fullname = field(form, "fullname");
-  const phone = field(form, "phone", 40);
+  const phone = phoneField(form);
   const email = field(form, "email");
   const planId = field(form, "planId", 100);
 
+  if (hasPhone(form) && !phone) return { status: "error", message: ui.form.invalidPhone };
   const invalid = validateContact(ui, fullname, phone, email);
   if (invalid) return invalid;
 
@@ -61,11 +72,12 @@ export async function createSubmission(_prev: FormState, form: FormData): Promis
   if (field(form, "website")) return { status: "success", message: ui.contact.success };
 
   const fullname = field(form, "fullname");
-  const phone = field(form, "phone", 40);
+  const phone = phoneField(form);
   const email = field(form, "email");
   const title = field(form, "title");
   const description = field(form, "description", 5000);
 
+  if (hasPhone(form) && !phone) return { status: "error", message: ui.form.invalidPhone };
   const invalid = validateContact(ui, fullname, phone, email);
   if (invalid) return invalid;
   if (!title) return { status: "error", message: ui.form.required };
