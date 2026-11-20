@@ -40,8 +40,11 @@ export const chip =
 export const formCard = "rounded-[20px] border border-teal/20 bg-crimson/5 p-8 max-[480px]:px-[1.2rem] max-[480px]:py-6";
 export const formGrid = "grid gap-4";
 export const fieldLabel = "mb-[0.4rem] block text-[0.82rem] font-semibold text-muted";
-export const fieldInput =
-  "w-full rounded-xl border border-teal/20 bg-bg/60 px-4 py-[0.8rem] text-[0.95rem] text-fg transition duration-200 focus:border-teal focus:ring-3 focus:ring-teal/20 focus:outline-none";
+const fieldBase =
+  "rounded-xl border border-teal/20 bg-bg/60 py-[0.8rem] text-[0.95rem] text-fg transition duration-200 focus:border-teal focus:ring-3 focus:ring-teal/20 focus:outline-none";
+export const fieldInput = `${fieldBase} w-full px-4`;
+/** Fixed-width country-code select that sits left of the phone input. */
+export const fieldSelect = `${fieldBase} w-[6.5rem] shrink-0 cursor-pointer px-2`;
 export const honeypot = "absolute -left-[10000px] size-px overflow-hidden";
 const formMsg = "rounded-xl border px-4 py-[0.8rem] text-[0.9rem] leading-[1.6]";
 export const formMsgOk = `${formMsg} border-teal/40 bg-teal/12 text-teal-light`;

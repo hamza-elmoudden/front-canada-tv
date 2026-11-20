@@ -103,6 +103,7 @@ const dictionary = {
       sub: "Leave your details and we will contact you to activate your subscription.",
       fullname: "Full name",
       phone: "Phone",
+      phoneCode: "Country code",
       email: "Email",
       submit: "Place order",
       sending: "Sending…",
@@ -116,6 +117,7 @@ const dictionary = {
       sub: "Questions about a plan or setup? Send us a message and we will reply quickly.",
       fullname: "Full name",
       phone: "Phone",
+      phoneCode: "Country code",
       email: "Email",
       subject: "Subject",
       message: "Message",
@@ -130,6 +132,7 @@ const dictionary = {
     form: {
       required: "Please fill in all required fields.",
       invalidEmail: "Please enter a valid email address.",
+      invalidPhone: "Please enter a valid phone number.",
       failed: "Something went wrong. Please try again or contact us on WhatsApp.",
     },
     footer: {
@@ -216,6 +219,7 @@ const dictionary = {
       sub: "Zostaw swoje dane, a skontaktujemy się z Tobą, aby aktywować subskrypcję.",
       fullname: "Imię i nazwisko",
       phone: "Telefon",
+      phoneCode: "Kierunkowy kraju",
       email: "E-mail",
       submit: "Złóż zamówienie",
       sending: "Wysyłanie…",
@@ -229,6 +233,7 @@ const dictionary = {
       sub: "Pytania o pakiet lub instalację? Napisz do nas — odpowiemy szybko.",
       fullname: "Imię i nazwisko",
       phone: "Telefon",
+      phoneCode: "Kierunkowy kraju",
       email: "E-mail",
       subject: "Temat",
       message: "Wiadomość",
@@ -243,6 +248,7 @@ const dictionary = {
     form: {
       required: "Uzupełnij wszystkie wymagane pola.",
       invalidEmail: "Podaj poprawny adres e-mail.",
+      invalidPhone: "Podaj poprawny numer telefonu.",
       failed: "Coś poszło nie tak. Spróbuj ponownie lub napisz do nas na WhatsApp.",
     },
     footer: {
