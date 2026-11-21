@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { altText } from "@/lib/i18n";
 import { getI18n } from "@/lib/locale";
 
 // Logos in public/channel/. Filenames contain spaces and "+", so they are URL-encoded.
@@ -31,7 +32,7 @@ export async function ChannelsSlider() {
               <div className="relative size-16 overflow-hidden rounded-[14px] border border-white/8 bg-white/5">
                 <Image
                   src={`/channel/${encodeURIComponent(c.file)}`}
-                  alt={i < CHANNELS.length ? c.name : ""}
+                  alt={i < CHANNELS.length ? altText(ui.alt.channel, c.name) : ""}
                   fill
                   sizes="64px"
                   className="object-cover"
