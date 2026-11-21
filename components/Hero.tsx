@@ -16,7 +16,7 @@ export async function Hero({ home }: { home: HomePage }) {
     <section id="hero" className="relative isolate flex min-h-screen items-center overflow-hidden">
       <Image
         src={heroImage}
-        alt=""
+        alt={ui.alt.hero}
         fill
         priority
         placeholder="blur"
