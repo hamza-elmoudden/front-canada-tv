@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Fragment } from "react";
 import { EagleBackground } from "@/components/EagleBackground";
 import { WaveDivider } from "@/components/WaveDivider";
+import { altText } from "@/lib/i18n";
 import { getI18n } from "@/lib/locale";
 import { hasImage, urlFor } from "@/lib/sanity/image";
 import type { InfoSection } from "@/lib/sanity/types";
@@ -35,7 +36,7 @@ export async function InfoSections({ sections, features, id = "about", eagles = 
         const title = s ? tr(s.title) : ui.about.title;
         const text = s ? tr(s.text) : "";
         const imageLeft = s?.imagePosition === "left";
-        const alt = title || ui.about.imageAlt;
+        const alt = s && title ? altText(ui.alt.section, title) : ui.about.imageAlt;
 
         return (
           <Fragment key={s?._id ?? i}>
