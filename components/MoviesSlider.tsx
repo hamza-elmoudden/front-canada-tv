@@ -1,4 +1,5 @@
 import { MoviesTrack } from "@/components/MoviesTrack";
+import { altText } from "@/lib/i18n";
 import { getI18n } from "@/lib/locale";
 import { sectionHeadCenter, sectionLabel, sectionSubCenter, sectionTitle } from "@/lib/ui";
 
@@ -35,7 +36,7 @@ export async function MoviesSlider() {
         <p className={sectionSubCenter}>{ui.movies.sub}</p>
       </div>
 
-      <MoviesTrack movies={MOVIES} />
+      <MoviesTrack movies={MOVIES.map((m) => ({ ...m, alt: altText(ui.alt.movie, m.title) }))} />
     </section>
   );
 }

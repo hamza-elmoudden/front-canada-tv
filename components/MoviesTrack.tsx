@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-type Movie = { file: string; title: string };
+/** `alt` is built on the server (MoviesSlider) because this client component has no access to the dictionary. */
+type Movie = { file: string; title: string; alt: string };
 
 // Scrolling poster track: the poster closest to the horizontal centre grows and rises above its neighbours.
 export function MoviesTrack({ movies }: { movies: Movie[] }) {
@@ -73,7 +74,7 @@ export function MoviesTrack({ movies }: { movies: Movie[] }) {
             <div className="relative aspect-[2/3] rounded-[14px] border border-teal/20 bg-white/4 shadow-[0_10px_30px_rgb(0_0_0/0.35)] transition-[border-color,box-shadow] duration-300 group-hover:border-teal/50 group-hover:shadow-[0_16px_40px_rgb(220_20_60/0.25)]">
               <Image
                 src={`/movies/${encodeURIComponent(m.file)}`}
-                alt={i < movies.length ? m.title : ""}
+                alt={i < movies.length ? m.alt : ""}
                 fill
                 unoptimized
                 // The marquee slides posters in from off-screen, so lazy loading shows empty boxes.
