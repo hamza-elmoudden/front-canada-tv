@@ -6,7 +6,7 @@ import { Suspense } from "react";
 import { JsonLd } from "@/components/JsonLd";
 import { CategoryChips, formatDate } from "@/components/PostCard";
 import { getPost } from "@/lib/data";
-import { localePath } from "@/lib/i18n";
+import { altText, localePath } from "@/lib/i18n";
 import { getI18n } from "@/lib/locale";
 import { backLink, chip, proseText, sectionTitle, sectionTop } from "@/lib/ui";
 import { ORG_ID } from "@/lib/jsonld";
@@ -105,7 +105,7 @@ async function PostDetails({ params }: Pick<PageProps<"/[lang]/blog/[slug]">, "p
       )}
       {cover && (
         <div className="relative mb-10 aspect-video overflow-hidden rounded-[20px] border border-teal/20">
-          <Image src={cover} alt={title} fill priority sizes="(max-width: 800px) 100vw, 760px" />
+          <Image src={cover} alt={altText(ui.alt.post, title)} fill priority sizes="(max-width: 800px) 100vw, 760px" />
         </div>
       )}
       <div className={`${proseText} text-[1.05rem]`}>{tr(post.body)}</div>

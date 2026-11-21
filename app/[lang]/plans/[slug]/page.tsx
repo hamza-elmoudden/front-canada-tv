@@ -69,7 +69,7 @@ async function PlanDetails({ params }: Pick<PageProps<"/[lang]/plans/[slug]">, "
           </Link>
           {card.imageUrl && (
             <div className="relative mb-8 aspect-[16/10] overflow-hidden rounded-[20px] border border-teal/20">
-              <Image src={card.imageUrl} alt={card.title} fill priority sizes="(max-width: 1024px) 100vw, 560px" />
+              <Image src={card.imageUrl} alt={card.imageAlt} fill priority sizes="(max-width: 1024px) 100vw, 560px" />
             </div>
           )}
           <span className={sectionLabel}>{ui.plans.label}</span>
