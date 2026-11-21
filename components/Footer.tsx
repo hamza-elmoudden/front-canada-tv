@@ -95,6 +95,9 @@ export async function Footer({ footer, contact, nav, year }: Props) {
           <Link href={href("/sitemap")} className="text-[0.82rem] text-muted transition-colors duration-200 hover:text-teal">
             {ui.footer.sitemap}
           </Link>
+          <Link href={href("/policy")} className="text-[0.82rem] text-muted transition-colors duration-200 hover:text-teal">
+            {ui.footer.policy}
+          </Link>
           <span className="text-[0.78rem] text-teal">{ui.footer.tagline}</span>
         </span>
       </div>
