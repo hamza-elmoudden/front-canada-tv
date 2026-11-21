@@ -25,7 +25,11 @@ export default async function SitemapPage() {
   const [{ locale, ui, tr }, routes] = await Promise.all([getI18n(), getRouteIndex()]);
 
   const label = (entry: RouteEntry) =>
-    entry.pageKey === "sitemap" ? ui.sitemap.title : entry.pageKey ? ui.nav[entry.pageKey] : tr(entry.title) || entry.path;
+    entry.pageKey === "sitemap"
+      ? ui.sitemap.title
+      : entry.pageKey === "policy"
+        ? ui.footer.policy
+        : entry.pageKey ? ui.nav[entry.pageKey] : tr(entry.title) || entry.path;
 
   const detail = (entry: RouteEntry) => {
     if (entry.section === "plans" && entry.price != null) return formatPrice(entry.price, entry.currency);
