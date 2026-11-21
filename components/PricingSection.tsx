@@ -1,4 +1,4 @@
-import { localePath, t, type Locale } from "@/lib/i18n";
+import { altText, getDict, localePath, t, type Locale } from "@/lib/i18n";
 import { getI18n } from "@/lib/locale";
 import { hasImage, urlFor } from "@/lib/sanity/image";
 import type { Plan, PlanSection } from "@/lib/sanity/types";
@@ -22,15 +22,17 @@ export function toPlanCard(plan: Plan, locale: Locale, featuredId?: string): Pla
     plan.oldPrice && plan.price && plan.oldPrice > plan.price
       ? Math.round((1 - plan.price / plan.oldPrice) * 100)
       : undefined;
+  const title = t(plan.title, locale);
   return {
     id: plan._id,
     href: localePath(locale, `/plans/${plan.slug}`),
-    title: t(plan.title, locale),
+    title,
     shortDescription: t(plan.Shortdescription, locale),
     description: t(plan.description, locale),
     price: formatPrice(plan.price, plan.currency),
     oldPrice: save ? formatPrice(plan.oldPrice, plan.currency) : undefined,
     savePercent: save,
+    imageAlt: altText(getDict(locale).alt.plan, title),
     imageUrl: hasImage(plan.image) ? urlFor(plan.image).width(640).height(400).fit("crop").url() : undefined,
     salesCount: plan.salesCount,
     featured: plan._id === featuredId,

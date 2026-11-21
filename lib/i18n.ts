@@ -66,6 +66,14 @@ const dictionary = {
       ],
     },
     channelsLabel: "Channels included",
+    alt: {
+      hero: "IPTV Poland: live Polish TV channels, sports and movies on a Smart TV",
+      channel: "{name} logo – live TV channel on IPTV Poland",
+      movie: "{name} poster – stream it with IPTV Poland",
+      plan: "{name} – IPTV Poland subscription plan",
+      post: "{name} – IPTV Poland blog",
+      section: "{name} – IPTV Poland streaming service",
+    },
     movies: {
       label: "Movies & Series",
       title: "Blockbusters and Hit Series",
@@ -75,7 +83,7 @@ const dictionary = {
     about: {
       label: "About Us",
       title: "An Entertainment Experience Like No Other",
-      imageAlt: "About our IPTV service",
+      imageAlt: "IPTV Poland streaming service on Smart TV, phone and tablet",
     },
     plans: {
       label: "Plans",
@@ -193,6 +201,14 @@ const dictionary = {
       ],
     },
     channelsLabel: "Dostępne kanały",
+    alt: {
+      hero: "IPTV Polska: polskie kanały na żywo, sport i filmy na Smart TV",
+      channel: "Logo {name} – kanał na żywo w IPTV Polska",
+      movie: "Plakat {name} – oglądaj w IPTV Polska",
+      plan: "{name} – pakiet abonamentu IPTV Polska",
+      post: "{name} – blog IPTV Polska",
+      section: "{name} – usługa IPTV Polska",
+    },
     movies: {
       label: "Filmy i seriale",
       title: "Hity kinowe i najpopularniejsze seriale",
@@ -202,7 +218,7 @@ const dictionary = {
     about: {
       label: "O nas",
       title: "Rozrywka, jakiej jeszcze nie znasz",
-      imageAlt: "O naszej usłudze IPTV",
+      imageAlt: "Usługa IPTV Polska na Smart TV, telefonie i tablecie",
     },
     plans: {
       label: "Pakiety",
@@ -301,4 +317,9 @@ export type Dict = Widen<(typeof dictionary)["en"]>;
 
 export function getDict(locale: Locale): Dict {
   return dictionary[locale];
+}
+
+/** Fills an `alt` template from the dictionary, e.g. altText(ui.alt.movie, "Titanic"). */
+export function altText(template: string, name: string) {
+  return template.replaceAll("{name}", name);
 }

@@ -15,6 +15,7 @@ export type PlanCardData = {
   oldPrice?: string;
   savePercent?: number;
   imageUrl?: string;
+  imageAlt: string;
   salesCount?: number;
   featured: boolean;
 };
@@ -52,7 +53,7 @@ export function PlanCard({ plan, labels }: { plan: PlanCardData; labels: Labels 
 
       {plan.imageUrl ? (
         <div className={`relative mx-auto mb-[1.2rem] aspect-[16/10] w-full overflow-hidden rounded-[14px] border border-teal/20 bg-linear-135 from-crimson/20 to-teal/15 ${plan.featured ? "mt-[1.8rem]" : ""}`}>
-          <Image src={plan.imageUrl} alt={plan.title} fill sizes="(max-width: 768px) 90vw, 360px" className="object-contain" />
+          <Image src={plan.imageUrl} alt={plan.imageAlt} fill sizes="(max-width: 768px) 90vw, 360px" className="object-contain" />
         </div>
       ) : (
         <div

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { localePath, t, type Locale } from "@/lib/i18n";
+import { altText, localePath, t, type Locale } from "@/lib/i18n";
 import { getI18n } from "@/lib/locale";
 import { hasImage, urlFor } from "@/lib/sanity/image";
 import type { Post } from "@/lib/sanity/types";
@@ -34,7 +34,7 @@ export async function PostCard({ post }: { post: Post }) {
         {hasImage(post.coverImage) && (
           <Image
             src={urlFor(post.coverImage).width(800).height(450).fit("crop").url()}
-            alt={title}
+            alt={altText(ui.alt.post, title)}
             fill
             sizes="(max-width: 480px) 100vw, 400px"
             className="object-cover"
