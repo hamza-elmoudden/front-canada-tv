@@ -3,10 +3,8 @@ import type { LocaleValue } from "./sanity/types";
 export const LOCALES = ["en", "pl"] as const;
 export type Locale = (typeof LOCALES)[number];
 
-/** Used when the visitor's language can't be detected (NEXT_PUBLIC_SITE_LOCALE, default "en"). */
-export const DEFAULT_LOCALE: Locale = process.env.NEXT_PUBLIC_SITE_LOCALE === "pl" ? "pl" : "en";
-
-export const LOCALE_COOKIE = "NEXT_LOCALE";
+/** Language that locale-less URLs open in (NEXT_PUBLIC_SITE_LOCALE, default "pl"). */
+export const DEFAULT_LOCALE: Locale = process.env.NEXT_PUBLIC_SITE_LOCALE === "en" ? "en" : "pl";
 
 export function isLocale(value: unknown): value is Locale {
   return typeof value === "string" && (LOCALES as readonly string[]).includes(value);
@@ -157,7 +155,31 @@ const dictionary = {
       rights: "All rights reserved",
       tagline: "Unlimited Entertainment 🎬",
       sitemap: "Sitemap",
+      policy: "Refund Policy",
       desc: "Premium IPTV with diverse content and effortless streaming on any screen.",
+    },
+    policy: {
+      label: "Policy",
+      title: "Delivery & Refund Policy",
+      sub: "How you receive your subscription, the free trial, and how refunds work.",
+      sections: [
+        [
+          "📩 Delivery",
+          "IPTV Pro is a digital service: nothing is shipped. After your payment is confirmed, we send your activation code and setup instructions by email or WhatsApp. Delivery is free and usually takes a few minutes, at most 24 hours.",
+        ],
+        [
+          "🎁 1-day free trial",
+          "Before you buy, you can ask for a free 24-hour test so you can check the channels, picture quality and stability on your own devices. Contact us to request your trial.",
+        ],
+        [
+          "💸 Refunds",
+          "You can ask for a full refund within 6 days of your purchase. To request it, contact us by email or WhatsApp with your order details. Refunds are free and go back to your original payment method.",
+        ],
+        [
+          "📞 Questions",
+          "If anything is unclear, contact us and we will help you.",
+        ],
+      ],
     },
     sitemap: {
       label: "Sitemap",
@@ -292,7 +314,31 @@ const dictionary = {
       rights: "Wszelkie prawa zastrzeżone",
       tagline: "Rozrywka bez limitu 🎬",
       sitemap: "Mapa strony",
+      policy: "Polityka zwrotów",
       desc: "Premium IPTV z bogatą ofertą i wygodnym oglądaniem na każdym ekranie.",
+    },
+    policy: {
+      label: "Regulamin",
+      title: "Polityka dostawy i zwrotów",
+      sub: "Jak otrzymujesz subskrypcję, darmowy test i zasady zwrotu pieniędzy.",
+      sections: [
+        [
+          "📩 Dostawa",
+          "IPTV Pro to usługa cyfrowa — niczego nie wysyłamy pocztą. Po potwierdzeniu płatności wysyłamy kod aktywacyjny i instrukcję konfiguracji e-mailem lub przez WhatsApp. Dostawa jest bezpłatna i zwykle trwa kilka minut, maksymalnie 24 godziny.",
+        ],
+        [
+          "🎁 Darmowy test na 1 dzień",
+          "Przed zakupem możesz poprosić o bezpłatny 24-godzinny test, aby sprawdzić kanały, jakość obrazu i stabilność na swoich urządzeniach. Skontaktuj się z nami, aby otrzymać test.",
+        ],
+        [
+          "💸 Zwroty",
+          "Możesz poprosić o pełny zwrot pieniędzy w ciągu 6 dni od zakupu. Aby to zrobić, napisz do nas e-mailem lub przez WhatsApp, podając dane zamówienia. Zwrot jest bezpłatny i trafia na pierwotną metodę płatności.",
+        ],
+        [
+          "📞 Pytania",
+          "Jeśli coś jest niejasne, skontaktuj się z nami — chętnie pomożemy.",
+        ],
+      ],
     },
     sitemap: {
       label: "Mapa strony",

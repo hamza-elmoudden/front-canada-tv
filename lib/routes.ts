@@ -14,7 +14,7 @@ import type { LocaleValue } from "./sanity/types";
 
 export type Section = "pages" | "plans" | "blog";
 export type ChangeFrequency = "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
-export type PageKey = "home" | "about" | "faq" | "blog" | "contact" | "sitemap";
+export type PageKey = "home" | "about" | "faq" | "blog" | "contact" | "policy" | "sitemap";
 
 export type RouteEntry = {
   section: Section;
@@ -101,6 +101,7 @@ export async function getRouteIndex(): Promise<RouteEntry[]> {
     page("faq", "/faq", faq, faq?._updatedAt, "monthly", 0.6),
     page("blog", "/blog", blog, latest(blog?._updatedAt, latestPost), "daily", 0.7),
     page("contact", "/contact", undefined, contact?._updatedAt, "yearly", 0.5),
+    page("policy", "/policy", undefined, undefined, "yearly", 0.3),
   ];
 
   const planEntries: RouteEntry[] = plans.map((p) => {

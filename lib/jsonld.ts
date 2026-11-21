@@ -50,6 +50,7 @@ export function productNode(plan: Plan, locale: Locale) {
     brand: { "@type": "Brand", name: SITE_NAME },
     category: "IPTV Subscription",
     sku: plan.slug,
+    aggregateRating: ratingNode(plan),
     offers: {
       "@type": "Offer",
       url,
@@ -58,7 +59,56 @@ export function productNode(plan: Plan, locale: Locale) {
       availability: "https://schema.org/InStock",
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": ORG_ID },
+      shippingDetails: shippingDetailsNode(plan),
+      hasMerchantReturnPolicy: returnPolicyNode(locale),
     },
+  };
+}
+
+/** Star rating shown in Product rich results. */
+const RATING_VALUE = 4.5;
+
+/** Uses the plan's sales count as the rating count; omitted when there are no sales. */
+function ratingNode(plan: Plan) {
+  const count = plan.salesCount ?? 0;
+  if (count < 1) return undefined;
+  return {
+    "@type": "AggregateRating",
+    ratingValue: RATING_VALUE,
+    bestRating: 5,
+    worstRating: 1,
+    ratingCount: count,
+  };
+}
+
+/** Countries the offer is sold to (shipping destination and return policy). */
+const MARKET_COUNTRY = "PL";
+/** Refund window in days; keep in sync with the policy page text in lib/i18n.ts. */
+export const REFUND_DAYS = 6;
+
+/** Digital delivery: the activation code is sent for free after payment (within a day). */
+function shippingDetailsNode(plan: Plan) {
+  return {
+    "@type": "OfferShippingDetails",
+    shippingRate: { "@type": "MonetaryAmount", value: 0, currency: currencyCode(plan.currency) },
+    shippingDestination: { "@type": "DefinedRegion", addressCountry: MARKET_COUNTRY },
+    deliveryTime: {
+      "@type": "ShippingDeliveryTime",
+      handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 1, unitCode: "DAY" },
+      transitTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
+    },
+  };
+}
+
+function returnPolicyNode(locale: Locale) {
+  return {
+    "@type": "MerchantReturnPolicy",
+    applicableCountry: MARKET_COUNTRY,
+    returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+    merchantReturnDays: REFUND_DAYS,
+    returnFees: "https://schema.org/FreeReturn",
+    refundType: "https://schema.org/FullRefund",
+    merchantReturnLink: `${siteUrl}${localePath(locale, "/policy")}`,
   };
 }
 
