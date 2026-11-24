@@ -5,7 +5,7 @@ import { fieldInput, fieldLabel, fieldSelect } from "@/lib/ui";
 
 type Props = { id: string; label: string; codeLabel: string };
 
-/** Country dial-code select (Europe, Poland by default) + local number input. */
+/** Country dial-code select (Canada by default) + local number input. */
 export function PhoneField({ id, label, codeLabel }: Props) {
   return (
     <div>
