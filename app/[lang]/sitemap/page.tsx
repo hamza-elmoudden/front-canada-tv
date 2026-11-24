@@ -32,7 +32,7 @@ export default async function SitemapPage() {
         : entry.pageKey ? ui.nav[entry.pageKey] : tr(entry.title) || entry.path;
 
   const detail = (entry: RouteEntry) => {
-    if (entry.section === "plans" && entry.price != null) return formatPrice(entry.price, entry.currency);
+    if (entry.section === "plans" && entry.price != null) return formatPrice(entry.price, entry.currency, locale);
     if (entry.section === "blog" && entry.publishedAt) return formatDate(entry.publishedAt, locale);
     return null;
   };
