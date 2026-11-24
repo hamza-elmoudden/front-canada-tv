@@ -55,11 +55,11 @@ export function productNode(plan: Plan, locale: Locale) {
       "@type": "Offer",
       url,
       price: plan.price != null ? plan.price.toFixed(2) : undefined,
-      priceCurrency: currencyCode(plan.currency),
+      priceCurrency: currencyCode(),
       availability: "https://schema.org/InStock",
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@id": ORG_ID },
-      shippingDetails: shippingDetailsNode(plan),
+      shippingDetails: shippingDetailsNode(),
       hasMerchantReturnPolicy: returnPolicyNode(locale),
     },
   };
@@ -87,10 +87,10 @@ const MARKET_COUNTRY = "CA";
 export const REFUND_DAYS = 6;
 
 /** Digital delivery: the activation code is sent for free after payment (within a day). */
-function shippingDetailsNode(plan: Plan) {
+function shippingDetailsNode() {
   return {
     "@type": "OfferShippingDetails",
-    shippingRate: { "@type": "MonetaryAmount", value: 0, currency: currencyCode(plan.currency) },
+    shippingRate: { "@type": "MonetaryAmount", value: 0, currency: currencyCode() },
     shippingDestination: { "@type": "DefinedRegion", addressCountry: MARKET_COUNTRY },
     deliveryTime: {
       "@type": "ShippingDeliveryTime",

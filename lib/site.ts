@@ -1,4 +1,4 @@
-import { getDict, localePath, t, type Locale } from "./i18n";
+import { DEFAULT_LOCALE, getDict, localePath, t, type Locale } from "./i18n";
 import type { ContactInfo, LocaleValue, Navbar } from "./sanity/types";
 
 export const SITE_NAME = "IPTV Pro";
@@ -40,26 +40,17 @@ export function whatsappLink(contact: ContactInfo, text?: string) {
   return `https://wa.me/${digits}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
 }
 
-const CURRENCY_CODES: Record<string, string> = {
-  "€": "EUR",
-  $: "USD",
-  "£": "GBP",
-  "ca$": "CAD",
-  "c$": "CAD",
-};
+/** The site sells in Canadian dollars only. */
+export const CURRENCY = "CAD";
 
-/** ISO 4217 code for JSON-LD; Sanity's `currency` may hold a symbol or a code. */
-export function currencyCode(currency?: string) {
-  const c = (currency ?? "").trim();
-  return CURRENCY_CODES[c.toLowerCase()] ?? CURRENCY_CODES[c] ?? (c.toUpperCase() || "CAD");
+/** ISO 4217 code for JSON-LD. Always CAD, whatever the plan's Sanity `currency` says. */
+export function currencyCode() {
+  return CURRENCY;
 }
 
-const CURRENCY_SYMBOLS: Record<string, string> = { CAD: "$", EUR: "€", USD: "US$", GBP: "£" };
-
-/** Price with its currency symbol; plans without a currency are priced in Canadian dollars. */
-export function formatPrice(price?: number, currency?: string) {
+/** Price in Canadian dollars, e.g. "58 CAD" (French uses a decimal comma: "58,99 CAD"). */
+export function formatPrice(price?: number, _currency?: string, locale: Locale = DEFAULT_LOCALE) {
   if (price == null) return "—";
-  const amount = Number.isInteger(price) ? String(price) : price.toFixed(2);
-  const code = currencyCode(currency);
-  return `${amount} ${CURRENCY_SYMBOLS[code] ?? code}`;
+  const amount = Number.isInteger(price) ? String(price) : price.toFixed(2).replace(".", locale === "fr" ? "," : ".");
+  return `${amount} CAD`;
 }
