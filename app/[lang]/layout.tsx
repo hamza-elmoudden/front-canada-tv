@@ -39,7 +39,7 @@ async function currentYear() {
 }
 
 export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
-  const { locale, ui, tr, href } = await getI18n();
+  const { locale, ui, href } = await getI18n();
   const [navbar, footer, contact, year] = await Promise.all([
     getNavbar(),
     getFooter(),
@@ -57,7 +57,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
           locale={locale}
           homeHref={href("/")}
           ctaHref={href("/#plans")}
-          ctaLabel={tr(navbar?.ctaLabel) || ui.subscribeNow}
+          ctaLabel={ui.subscribeNow}
           menuLabel={ui.menu}
           languageLabel={ui.language}
         />

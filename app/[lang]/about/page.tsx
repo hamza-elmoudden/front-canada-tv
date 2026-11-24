@@ -55,9 +55,9 @@ export default async function AboutPage() {
       <PageHero label={ui.about.label} title={title} sub={description} />
       <ChannelsSlider />
       <WaveDivider variant="f" />
-      <InfoSections sections={sections} features={features} eagles />
+      <InfoSections sections={sections} features={features} leaves />
       <WaveDivider variant="g" />
-      <PricingSection plans={plans} section={planSection} eagles />
+      <PricingSection plans={plans} section={planSection} leaves />
     </>
   );
 }

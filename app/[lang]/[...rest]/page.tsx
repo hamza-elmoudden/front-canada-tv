@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-// Unmatched URLs under /en or /pl land here so they get the localized not-found page.
+// Unmatched URLs under /en or /fr land here so they get the localized not-found page.
 // Cache Components needs at least one static param.
 export async function generateStaticParams() {
   return [{ rest: ["__placeholder__"] }];

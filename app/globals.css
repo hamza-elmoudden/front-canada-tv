@@ -26,9 +26,9 @@
   --animate-rainbow: rainbow-shift 14s ease-in-out infinite;
   --animate-scroll-ltr: scroll-ltr 40s linear infinite;
   --animate-scroll-rtl: scroll-rtl 45s linear infinite;
-  --animate-eagle-drift: eagle-drift 22s ease-in-out infinite;
+  --animate-leaf-drift: leaf-drift 22s ease-in-out infinite;
 
-  @keyframes eagle-drift {
+  @keyframes leaf-drift {
     0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
     25% { transform: translate(60px, -40px) rotate(6deg) scale(1.06); }
     50% { transform: translate(-30px, -80px) rotate(-4deg) scale(0.96); }

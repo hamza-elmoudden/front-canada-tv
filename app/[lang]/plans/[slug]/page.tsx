@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/plans/[slu
   if (!plan) return {};
   return buildMetadata(plan.seo, {
     title: tr(plan.title),
-    description: tr(plan.Shortdescription),
+    description: tr(plan.shortDescription),
     path: `/plans/${slug}`,
     locales: route?.locales,
   }, locale);

@@ -41,11 +41,11 @@ export default async function HomePage() {
       {jsonLd["@graph"].length > 0 && <JsonLd data={jsonLd} />}
       <Hero home={home} />
       <ChannelsSlider />
-      <InfoSections sections={infoSections} eagles />
+      <InfoSections sections={infoSections} leaves />
       <WaveDivider />
       <MoviesSlider />
       <WaveDivider variant="b" />
-      <PricingSection plans={plans} section={planSection} eagles />
+      <PricingSection plans={plans} section={planSection} leaves />
       <WaveDivider />
       <FaqSection faq={faq} />
     </>
