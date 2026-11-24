@@ -1,13 +1,13 @@
 import Image from "next/image";
 import { Fragment } from "react";
-import { EagleBackground } from "@/components/EagleBackground";
+import { MapleLeafBackground } from "@/components/MapleLeafBackground";
 import { WaveDivider } from "@/components/WaveDivider";
 import { altText } from "@/lib/i18n";
 import { getI18n } from "@/lib/locale";
 import { hasImage, urlFor } from "@/lib/sanity/image";
 import type { InfoSection } from "@/lib/sanity/types";
 import { featureIcon, infoCard, infoCardHover, section, sectionLabel, sectionSub, sectionTitle } from "@/lib/ui";
-import sectionImage from "@/public/section.jpeg";
+import sectionImage from "@/public/canda_infosection.jpeg";
 
 type Feature = { icon?: string; text: string };
 
@@ -16,12 +16,12 @@ type Props = {
   /** Optional feature rows rendered under the first section (aboutPage.list). */
   features?: Feature[];
   id?: string;
-  /** Show the animated eagle background (home and about pages). */
-  eagles?: boolean;
+  /** Show the animated maple-leaf background (home and about pages). */
+  leaves?: boolean;
 };
 
 /** "About" block(s) driven by Sanity `infoSection` documents. */
-export async function InfoSections({ sections, features, id = "about", eagles = false }: Props) {
+export async function InfoSections({ sections, features, id = "about", leaves = false }: Props) {
   const { ui, tr } = await getI18n();
   const items: (InfoSection | null)[] = sections.length ? sections : [null];
 
@@ -30,7 +30,7 @@ export async function InfoSections({ sections, features, id = "about", eagles = 
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 opacity-35 animate-rainbow bg-size-[400%_400%] bg-[linear-gradient(120deg,var(--color-crimson),var(--color-violet),var(--color-teal),var(--color-steel),var(--color-crimson))]" />
         <div className="absolute inset-0 opacity-35 [animation-delay:-7s] mask-[linear-gradient(90deg,transparent_25%,#000_75%)] max-md:mask-[linear-gradient(180deg,transparent_25%,#000_75%)] animate-rainbow bg-size-[400%_400%] bg-[linear-gradient(120deg,var(--color-crimson),var(--color-violet),var(--color-teal),var(--color-steel),var(--color-crimson))]" />
-        {eagles && <EagleBackground />}
+        {leaves && <MapleLeafBackground />}
       </div>
       {items.map((s, i) => {
         const title = s ? tr(s.title) : ui.about.title;
