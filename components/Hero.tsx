@@ -4,8 +4,7 @@ import { getI18n } from "@/lib/locale";
 import type { HomePage } from "@/lib/sanity/types";
 import { btnOutline, btnPrimary } from "@/lib/ui";
 import { HeroReveal, HeroTitle } from "@/components/HeroText";
-import { HeroVideo } from "@/components/HeroVideo";
-import heroImage from "@/public/hero.jpeg";
+import heroImage from "@/public/candaherosection.jpeg";
 
 export async function Hero({ home }: { home: HomePage }) {
   const { ui, tr, href } = await getI18n();
@@ -21,9 +20,8 @@ export async function Hero({ home }: { home: HomePage }) {
         priority
         placeholder="blur"
         sizes="100vw"
-        className="-z-20 object-cover max-md:hidden"
+        className="-z-20 object-cover"
       />
-      <HeroVideo />
       <div className="absolute inset-0 -z-10 bg-linear-to-r from-bg/80 via-bg/40 to-transparent" />
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_20%_50%,rgb(0_147_213/0.18)_0%,transparent_60%)]" />
 
