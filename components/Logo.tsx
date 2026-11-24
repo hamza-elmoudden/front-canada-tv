@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MapleLeaf } from "./MapleLeaf";
 
 const styles = {
   nav: { link: "", icon: "size-10 rounded-[10px] text-[1.1rem]", text: "text-[1.3rem]" },
@@ -10,11 +11,15 @@ export function Logo({ variant = "nav", href }: { variant?: "nav" | "footer"; hr
   return (
     <Link href={href} className={`flex shrink-0 items-center gap-[0.6rem] ${s.link}`} aria-label="IPTV Pro">
       <span
-        className={`flex flex-col overflow-hidden ring-1 ring-white/20 ${s.icon}`}
+        className={`flex overflow-hidden ring-1 ring-white/20 ${s.icon}`}
         aria-hidden
       >
-        <span className="flex-1 bg-white" />
-        <span className="flex-1 bg-[#dc143c]" />
+        {/* Flag of Canada: red | white with maple leaf | red */}
+        <span className="w-1/4 bg-[#d52b1e]" />
+        <span className="flex w-1/2 items-center justify-center bg-white">
+          <MapleLeaf className="size-[80%] text-[#d52b1e]" />
+        </span>
+        <span className="w-1/4 bg-[#d52b1e]" />
       </span>
       <span className={`font-extrabold tracking-[-0.5px] text-white ${s.text}`}>
         IPTV<span className="text-teal">Pro</span>
