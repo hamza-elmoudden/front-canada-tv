@@ -29,7 +29,7 @@ export const CONTACT_INFO_QUERY = `*[_type == "contactInfo"][0] {
 
 export const FOOTER_QUERY = `*[_type == "footer"][0] { title, text }`;
 
-export const NAVBAR_QUERY = `*[_type == "navbar"][0] { names[], ctaLabel }`;
+export const NAVBAR_QUERY = `*[_type == "navbar"][0] { names[] }`;
 
 export const PLAN_SECTION_QUERY = `*[_type == "plansection"][0] { title, shorttext }`;
 
@@ -39,7 +39,7 @@ export const INFO_SECTIONS_QUERY = `*[_type == "infoSection"] | order(_createdAt
 }`;
 
 const PLAN_FIELDS = `
-  _id, title, Shortdescription, description, currency, price, oldPrice,
+  _id, title, shortDescription, description, currency, price, oldPrice,
   image, salesCount, "slug": slug.current, ${SEO}
 `;
 
@@ -84,10 +84,10 @@ export const ROUTE_INDEX_QUERY = `{
   },
   "plans": *[_type == "plan" && defined(slug.current)] | order(price asc) {
     "slug": slug.current, _updatedAt, title, price, currency,
-    "en": ${HAS("description", "en")}, "pl": ${HAS("description", "pl")}, ${INDEXING}
+    "en": ${HAS("description", "en")}, "fr": ${HAS("description", "fr")}, ${INDEXING}
   },
   "posts": ${PUBLISHED_POSTS} | order(publishedAt desc) {
     "slug": slug.current, _updatedAt, publishedAt, title,
-    "en": ${HAS("body", "en")}, "pl": ${HAS("body", "pl")}, ${INDEXING}
+    "en": ${HAS("body", "en")}, "fr": ${HAS("body", "fr")}, ${INDEXING}
   }
 }`;

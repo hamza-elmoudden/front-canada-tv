@@ -6,17 +6,17 @@ export const SITE_NAME = "IPTV Pro";
 export type NavItem = { label: string; href: string };
 
 const ROUTES = [
-  { href: "/", keys: ["home", "główna", "glowna", "start"], fallback: "home" },
-  { href: "/about", keys: ["about", "o nas"], fallback: "about" },
-  { href: "/#plans", keys: ["plan", "paln", "pricing", "price", "pakiet", "cennik"], fallback: "plans" },
-  { href: "/faq", keys: ["faq", "pytania", "question"], fallback: "faq" },
-  { href: "/blog", keys: ["blog", "news", "artyku"], fallback: "blog" },
-  { href: "/contact", keys: ["contact", "kontakt"], fallback: "contact" },
+  { href: "/", keys: ["home", "accueil", "start"], fallback: "home" },
+  { href: "/about", keys: ["about", "propos"], fallback: "about" },
+  { href: "/#plans", keys: ["plan", "paln", "pricing", "price", "forfait", "tarif", "prix"], fallback: "plans" },
+  { href: "/faq", keys: ["faq", "question"], fallback: "faq" },
+  { href: "/blog", keys: ["blog", "news", "nouvelles", "article"], fallback: "blog" },
+  { href: "/contact", keys: ["contact", "joindre"], fallback: "contact" },
 ] as const;
 
 /**
  * The navbar document only stores labels (`names[]`), so each label is
- * matched to a route by keyword in its English or Polish text. A label that
+ * matched to a route by keyword in its English or French text. A label that
  * matches no keyword takes the route at the same position.
  */
 export function buildNav(navbar: Navbar, locale: Locale): NavItem[] {
@@ -26,7 +26,7 @@ export function buildNav(navbar: Navbar, locale: Locale): NavItem[] {
     return ROUTES.map((r) => ({ label: ui.nav[r.fallback], href: localePath(locale, r.href) }));
   }
   return names.map((name, i) => {
-    const haystack = `${name?.en ?? ""} ${name?.pl ?? ""}`.toLowerCase();
+    const haystack = `${name?.en ?? ""} ${name?.fr ?? ""}`.toLowerCase();
     const route =
       ROUTES.find((r) => r.keys.some((k) => haystack.includes(k))) ??
       ROUTES[i % ROUTES.length];
@@ -44,19 +44,19 @@ const CURRENCY_CODES: Record<string, string> = {
   "€": "EUR",
   $: "USD",
   "£": "GBP",
-  zł: "PLN",
-  zl: "PLN",
+  "ca$": "CAD",
+  "c$": "CAD",
 };
 
 /** ISO 4217 code for JSON-LD; Sanity's `currency` may hold a symbol or a code. */
 export function currencyCode(currency?: string) {
   const c = (currency ?? "").trim();
-  return CURRENCY_CODES[c.toLowerCase()] ?? CURRENCY_CODES[c] ?? (c.toUpperCase() || "PLN");
+  return CURRENCY_CODES[c.toLowerCase()] ?? CURRENCY_CODES[c] ?? (c.toUpperCase() || "CAD");
 }
 
-const CURRENCY_SYMBOLS: Record<string, string> = { PLN: "zł", EUR: "€", USD: "$", GBP: "£" };
+const CURRENCY_SYMBOLS: Record<string, string> = { CAD: "$", EUR: "€", USD: "US$", GBP: "£" };
 
-/** Price with its currency symbol; plans without a currency are priced in złoty. */
+/** Price with its currency symbol; plans without a currency are priced in Canadian dollars. */
 export function formatPrice(price?: number, currency?: string) {
   if (price == null) return "—";
   const amount = Number.isInteger(price) ? String(price) : price.toFixed(2);

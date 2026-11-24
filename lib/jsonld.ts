@@ -45,7 +45,7 @@ export function productNode(plan: Plan, locale: Locale) {
     "@type": "Product",
     "@id": `${url}#product`,
     name: t(plan.title, locale),
-    description: t(plan.Shortdescription, locale) || t(plan.description, locale),
+    description: t(plan.shortDescription, locale) || t(plan.description, locale),
     image: hasImage(plan.image) ? [urlFor(plan.image).width(1200).url()] : undefined,
     brand: { "@type": "Brand", name: SITE_NAME },
     category: "IPTV Subscription",
@@ -82,7 +82,7 @@ function ratingNode(plan: Plan) {
 }
 
 /** Countries the offer is sold to (shipping destination and return policy). */
-const MARKET_COUNTRY = "PL";
+const MARKET_COUNTRY = "CA";
 /** Refund window in days; keep in sync with the policy page text in lib/i18n.ts. */
 export const REFUND_DAYS = 6;
 

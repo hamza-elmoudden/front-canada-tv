@@ -1,7 +1,7 @@
-// Mirrors the Studio schema in ../iptv-polanda/schemaTypes.
-// Every translatable field is a `localeString` / `localeText` object: { en, pl }.
+// Mirrors the Studio schema in ../../iptv-sanity/iptv-canada/schemaTypes.
+// Every translatable field is a `localeString` / `localeText` object: { en, fr }.
 
-export type LocaleValue = { en?: string; pl?: string } | null | undefined;
+export type LocaleValue = { en?: string; fr?: string } | null | undefined;
 
 export type SanityImage = {
   _type?: "image";
@@ -57,7 +57,7 @@ export type ContactInfo = {
 
 export type Footer = { title?: LocaleValue; text?: LocaleValue } | null;
 
-export type Navbar = { names?: LocaleValue[] | null; ctaLabel?: LocaleValue } | null;
+export type Navbar = { names?: LocaleValue[] | null } | null;
 
 export type PlanSection = {
   title?: LocaleValue;
@@ -76,7 +76,7 @@ export type InfoSection = {
 export type Plan = {
   _id: string;
   title?: LocaleValue;
-  Shortdescription?: LocaleValue;
+  shortDescription?: LocaleValue;
   description?: LocaleValue;
   currency?: string;
   price?: number;
@@ -107,7 +107,7 @@ export type Post = {
 
 /** Shape of ROUTE_INDEX_QUERY (only what sitemaps and static params need). */
 type Indexing = { _updatedAt: string; noIndex: boolean; canonicalUrl?: string | null };
-type Availability = { en: boolean; pl: boolean };
+type Availability = { en: boolean; fr: boolean };
 
 export type RouteIndexData = {
   singletons: (Indexing & { _type: "homePage" | "aboutPage" | "faqPage" | "blogPage" | "contactInfo" })[];

@@ -1,6 +1,7 @@
-/** European country dial codes for the phone field. Shared by the forms and the server actions. */
+/** Canada/US + European country dial codes for the phone field. Shared by the forms and the server actions. */
 export const PHONE_COUNTRIES = [
-  { iso: "PL", flag: "🇵🇱", dial: "+48" },
+  { iso: "CA", flag: "🇨🇦", dial: "+1" },
+  { iso: "US", flag: "🇺🇸", dial: "+1" },
   { iso: "AL", flag: "🇦🇱", dial: "+355" },
   { iso: "AD", flag: "🇦🇩", dial: "+376" },
   { iso: "AT", flag: "🇦🇹", dial: "+43" },
@@ -33,6 +34,7 @@ export const PHONE_COUNTRIES = [
   { iso: "NL", flag: "🇳🇱", dial: "+31" },
   { iso: "MK", flag: "🇲🇰", dial: "+389" },
   { iso: "NO", flag: "🇳🇴", dial: "+47" },
+  { iso: "PL", flag: "🇵🇱", dial: "+48" },
   { iso: "PT", flag: "🇵🇹", dial: "+351" },
   { iso: "RO", flag: "🇷🇴", dial: "+40" },
   { iso: "SM", flag: "🇸🇲", dial: "+378" },
@@ -46,7 +48,7 @@ export const PHONE_COUNTRIES = [
   { iso: "GB", flag: "🇬🇧", dial: "+44" },
 ] as const;
 
-export const DEFAULT_PHONE_COUNTRY = "PL";
+export const DEFAULT_PHONE_COUNTRY = "CA";
 
 /**
  * Builds the stored number from the selected country and the typed number.

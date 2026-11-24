@@ -2,9 +2,9 @@ import { NextResponse, type NextRequest } from "next/server";
 import { DEFAULT_LOCALE, LOCALES } from "@/lib/i18n";
 
 /**
- * Locale-less URLs (`/`, `/plans`) always open in the default language (Polish).
+ * Locale-less URLs (`/`, `/plans`) always open in the default language (English).
  * The browser language and previously viewed language are ignored on purpose;
- * visitors switch to English with the EN/PL switch (`/en/...`).
+ * visitors switch to French with the EN/FR switch (`/fr/...`).
  */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

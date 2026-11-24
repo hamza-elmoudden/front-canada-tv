@@ -57,7 +57,7 @@ function indexedLocales(path: string, locales: Locale[], doc: Indexing | undefin
   });
 }
 
-function availability(doc: { en: boolean; pl: boolean }): Locale[] {
+function availability(doc: { en: boolean; fr: boolean }): Locale[] {
   return LOCALES.filter((l) => doc[l]);
 }
 

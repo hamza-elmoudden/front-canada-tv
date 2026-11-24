@@ -28,7 +28,7 @@ export function resolveCanonical(raw: string | null | undefined, locale: Locale)
   }
   if (url.origin !== new URL(siteUrl).origin) return url.href;
   const path = url.pathname.replace(/\/$/, "") || "/";
-  const localized = /^\/(en|pl)(\/|$)/.test(path) ? path : localePath(locale, path);
+  const localized = /^\/(en|fr)(\/|$)/.test(path) ? path : localePath(locale, path);
   return `${siteUrl}${localized}${url.search}`;
 }
 
@@ -59,8 +59,8 @@ export function buildMetadata(seo: Seo | undefined, fallback: Fallback, locale: 
       description: tr(seo?.ogDescription) || description,
       url: canonical,
       siteName: SITE_NAME,
-      locale: locale === "pl" ? "pl_PL" : "en_US",
-      alternateLocale: locale === "pl" ? "en_US" : "pl_PL",
+      locale: locale === "fr" ? "fr_CA" : "en_CA",
+      alternateLocale: locale === "fr" ? "en_CA" : "fr_CA",
       // Next's openGraph types have no "product"; product pages fall back to "website".
       type: seo?.ogType === "article" ? "article" : "website",
       images: ogImage ? [{ url: ogImage, width: 1200, height: 630 }] : undefined,

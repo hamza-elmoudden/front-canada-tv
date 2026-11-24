@@ -1,10 +1,10 @@
 import type { LocaleValue } from "./sanity/types";
 
-export const LOCALES = ["en", "pl"] as const;
+export const LOCALES = ["en", "fr"] as const;
 export type Locale = (typeof LOCALES)[number];
 
-/** Language that locale-less URLs open in (NEXT_PUBLIC_SITE_LOCALE, default "pl"). */
-export const DEFAULT_LOCALE: Locale = process.env.NEXT_PUBLIC_SITE_LOCALE === "en" ? "en" : "pl";
+/** Language that locale-less URLs open in (NEXT_PUBLIC_SITE_LOCALE, default "en" — the Studio's default language). */
+export const DEFAULT_LOCALE: Locale = process.env.NEXT_PUBLIC_SITE_LOCALE === "fr" ? "fr" : "en";
 
 export function isLocale(value: unknown): value is Locale {
   return typeof value === "string" && (LOCALES as readonly string[]).includes(value);
@@ -13,10 +13,10 @@ export function isLocale(value: unknown): value is Locale {
 /** Reads a Sanity localeString/localeText in `locale`, falling back to the other language. */
 export function t(field: LocaleValue, locale: Locale): string {
   if (!field) return "";
-  return field[locale] || field.en || field.pl || "";
+  return field[locale] || field.en || field.fr || "";
 }
 
-/** Prefixes an app path with the locale: ("pl", "/plans") → "/pl/plans", ("en", "/#plans") → "/en#plans". */
+/** Prefixes an app path with the locale: ("fr", "/plans") → "/fr/plans", ("en", "/#plans") → "/en#plans". */
 export function localePath(locale: Locale, path: string) {
   if (path === "/" || path === "") return `/${locale}`;
   if (path.startsWith("/#") || path.startsWith("/?")) return `/${locale}${path.slice(1)}`;
@@ -33,7 +33,7 @@ export function preferredLocale(available: readonly Locale[]): Locale {
 
 /** Swaps the locale segment of a pathname (used by the language switcher). */
 export function switchLocalePath(pathname: string, to: Locale) {
-  const rest = pathname.replace(/^\/(en|pl)(?=\/|$)/, "");
+  const rest = pathname.replace(/^\/(en|fr)(?=\/|$)/, "");
   return `/${to}${rest}`;
 }
 
@@ -65,12 +65,12 @@ const dictionary = {
     },
     channelsLabel: "Channels included",
     alt: {
-      hero: "IPTV Poland: live Polish TV channels, sports and movies on a Smart TV",
-      channel: "{name} logo – live TV channel on IPTV Poland",
-      movie: "{name} poster – stream it with IPTV Poland",
-      plan: "{name} – IPTV Poland subscription plan",
-      post: "{name} – IPTV Poland blog",
-      section: "{name} – IPTV Poland streaming service",
+      hero: "IPTV Canada: live Canadian TV channels, sports and movies on a Smart TV",
+      channel: "{name} logo – live TV channel on IPTV Canada",
+      movie: "{name} poster – stream it with IPTV Canada",
+      plan: "{name} – IPTV Canada subscription plan",
+      post: "{name} – IPTV Canada blog",
+      section: "{name} – IPTV Canada streaming service",
     },
     movies: {
       label: "Movies & Series",
@@ -81,7 +81,7 @@ const dictionary = {
     about: {
       label: "About Us",
       title: "An Entertainment Experience Like No Other",
-      imageAlt: "IPTV Poland streaming service on Smart TV, phone and tablet",
+      imageAlt: "IPTV Canada streaming service on Smart TV, phone and tablet",
     },
     plans: {
       label: "Plans",
@@ -188,7 +188,7 @@ const dictionary = {
       pages: "Pages",
       plans: "Plans",
       blog: "Blog articles",
-      otherLanguage: "Available in Polish only",
+      otherLanguage: "Available in French only",
       updated: "Updated",
     },
     notFound: {
@@ -197,163 +197,163 @@ const dictionary = {
       back: "Back to home",
     },
   },
-  pl: {
+  fr: {
     nav: {
-      home: "Strona główna",
-      about: "O nas",
-      plans: "Pakiety",
+      home: "Accueil",
+      about: "À propos",
+      plans: "Forfaits",
       faq: "FAQ",
-      blog: "Blog",
-      contact: "Kontakt",
+      blog: "Blogue",
+      contact: "Contact",
     },
-    subscribeNow: "Kup teraz",
-    explorePlans: "Zobacz pakiety",
-    contactUs: "Kontakt",
+    subscribeNow: "S'abonner",
+    explorePlans: "Voir les forfaits",
+    contactUs: "Nous joindre",
     menu: "Menu",
-    backToTop: "Do góry",
+    backToTop: "Haut de page",
     hero: {
-      badge: "Profesjonalna usługa IPTV",
-      title: "Świat rozrywki bez ograniczeń",
-      desc: "Tysiące kanałów na żywo, filmów i seriali w świetnej jakości — zawsze i wszędzie.",
+      badge: "Service IPTV professionnel",
+      title: "Un monde de divertissement sans limites",
+      desc: "Des milliers de chaînes en direct, de films et de séries en qualité exceptionnelle, partout et en tout temps.",
       stats: [
-        ["+10K", "Kanałów na żywo"],
-        ["4K", "Jakość obrazu"],
-        ["24/7", "Wsparcie"],
-        ["99%", "Dostępność"],
+        ["+10K", "Chaînes en direct"],
+        ["4K", "Qualité d'image"],
+        ["24/7", "Soutien"],
+        ["99%", "Disponibilité"],
       ],
     },
-    channelsLabel: "Dostępne kanały",
+    channelsLabel: "Chaînes incluses",
     alt: {
-      hero: "IPTV Polska: polskie kanały na żywo, sport i filmy na Smart TV",
-      channel: "Logo {name} – kanał na żywo w IPTV Polska",
-      movie: "Plakat {name} – oglądaj w IPTV Polska",
-      plan: "{name} – pakiet abonamentu IPTV Polska",
-      post: "{name} – blog IPTV Polska",
-      section: "{name} – usługa IPTV Polska",
+      hero: "IPTV Canada : chaînes canadiennes en direct, sports et films sur Smart TV",
+      channel: "Logo {name} – chaîne en direct sur IPTV Canada",
+      movie: "Affiche {name} – à regarder sur IPTV Canada",
+      plan: "{name} – forfait d'abonnement IPTV Canada",
+      post: "{name} – blogue IPTV Canada",
+      section: "{name} – service de diffusion IPTV Canada",
     },
     movies: {
-      label: "Filmy i seriale",
-      title: "Hity kinowe i najpopularniejsze seriale",
-      sub: "Najnowsze filmy i najchętniej oglądane seriale — gotowe do oglądania, kiedy tylko chcesz.",
+      label: "Films et séries",
+      title: "Superproductions et séries à succès",
+      sub: "Les derniers films et les séries les plus populaires, prêts à regarder quand vous le voulez.",
     },
-    language: "Język",
+    language: "Langue",
     about: {
-      label: "O nas",
-      title: "Rozrywka, jakiej jeszcze nie znasz",
-      imageAlt: "Usługa IPTV Polska na Smart TV, telefonie i tablecie",
+      label: "À propos",
+      title: "Une expérience de divertissement unique",
+      imageAlt: "Service IPTV Canada sur Smart TV, téléphone et tablette",
     },
     plans: {
-      label: "Pakiety",
-      title: "Wybierz pakiet dla siebie",
-      sub: "Najlepsze doświadczenie streamingu w elastycznych pakietach dopasowanych do Ciebie.",
-      bestSeller: "⭐ Najczęściej wybierany",
-      sold: "sprzedanych",
-      save: "Oszczędzasz",
-      showDetails: "Pokaż szczegóły",
-      hideDetails: "Ukryj szczegóły",
-      prev: "Poprzednie plany",
-      next: "Następne plany",
-      empty: "Pakiety będą dostępne wkrótce.",
-      oneTime: "Płatność jednorazowa",
+      label: "Forfaits",
+      title: "Choisissez le forfait qui vous convient",
+      sub: "Profitez de la meilleure expérience de diffusion avec des forfaits flexibles adaptés à vos besoins.",
+      bestSeller: "⭐ Le plus populaire",
+      sold: "vendus",
+      save: "Économisez",
+      showDetails: "Voir les détails",
+      hideDetails: "Masquer les détails",
+      prev: "Forfaits précédents",
+      next: "Forfaits suivants",
+      empty: "Les forfaits seront bientôt disponibles.",
+      oneTime: "Paiement unique",
     },
     faq: {
       label: "FAQ",
-      title: "Wszystko, co musisz wiedzieć",
-      empty: "Brak pytań.",
+      title: "Tout ce que vous devez savoir",
+      empty: "Aucune question pour le moment.",
     },
     blog: {
-      label: "Blog",
-      title: "Aktualności i poradniki",
-      readMore: "Czytaj dalej →",
-      empty: "Brak opublikowanych artykułów.",
-      back: "← Wróć do bloga",
-      prev: "← Nowsze",
-      next: "Starsze →",
-      by: "autor:",
+      label: "Blogue",
+      title: "Nouvelles et guides",
+      readMore: "Lire la suite →",
+      empty: "Aucun article publié pour le moment.",
+      back: "← Retour au blogue",
+      prev: "← Plus récents",
+      next: "Plus anciens →",
+      by: "par",
     },
     order: {
-      title: "Zamów ten pakiet",
-      sub: "Zostaw swoje dane, a skontaktujemy się z Tobą, aby aktywować subskrypcję.",
-      fullname: "Imię i nazwisko",
-      phone: "Telefon",
-      phoneCode: "Kierunkowy kraju",
-      email: "E-mail",
-      submit: "Złóż zamówienie",
-      sending: "Wysyłanie…",
-      success: "Dziękujemy! Otrzymaliśmy Twoje zamówienie. Wkrótce się odezwiemy.",
-      whatsapp: "Napisz do nas na WhatsApp",
-      back: "← Wszystkie pakiety",
+      title: "Commander ce forfait",
+      sub: "Laissez vos coordonnées et nous vous contacterons pour activer votre abonnement.",
+      fullname: "Nom complet",
+      phone: "Téléphone",
+      phoneCode: "Indicatif du pays",
+      email: "Courriel",
+      submit: "Passer la commande",
+      sending: "Envoi…",
+      success: "Merci! Votre commande a bien été reçue. Nous vous contacterons sous peu.",
+      whatsapp: "Écrivez-nous sur WhatsApp",
+      back: "← Tous les forfaits",
     },
     contact: {
-      label: "Kontakt",
-      title: "Skontaktuj się z nami",
-      sub: "Pytania o pakiet lub instalację? Napisz do nas — odpowiemy szybko.",
-      fullname: "Imię i nazwisko",
-      phone: "Telefon",
-      phoneCode: "Kierunkowy kraju",
-      email: "E-mail",
-      subject: "Temat",
-      message: "Wiadomość",
-      submit: "Wyślij wiadomość",
-      sending: "Wysyłanie…",
-      success: "Dziękujemy! Wiadomość została wysłana.",
+      label: "Contact",
+      title: "Nous joindre",
+      sub: "Des questions sur un forfait ou l'installation? Écrivez-nous et nous vous répondrons rapidement.",
+      fullname: "Nom complet",
+      phone: "Téléphone",
+      phoneCode: "Indicatif du pays",
+      email: "Courriel",
+      subject: "Sujet",
+      message: "Message",
+      submit: "Envoyer le message",
+      sending: "Envoi…",
+      success: "Merci! Votre message a été envoyé.",
       whatsapp: "WhatsApp",
-      emailLabel: "E-mail",
+      emailLabel: "Courriel",
       facebook: "Facebook",
-      address: "Adres",
+      address: "Adresse",
     },
     form: {
-      required: "Uzupełnij wszystkie wymagane pola.",
-      invalidEmail: "Podaj poprawny adres e-mail.",
-      invalidPhone: "Podaj poprawny numer telefonu.",
-      failed: "Coś poszło nie tak. Spróbuj ponownie lub napisz do nas na WhatsApp.",
+      required: "Veuillez remplir tous les champs obligatoires.",
+      invalidEmail: "Veuillez entrer une adresse courriel valide.",
+      invalidPhone: "Veuillez entrer un numéro de téléphone valide.",
+      failed: "Une erreur est survenue. Veuillez réessayer ou nous joindre sur WhatsApp.",
     },
     footer: {
-      quickLinks: "Szybkie linki",
-      contact: "Kontakt",
-      rights: "Wszelkie prawa zastrzeżone",
-      tagline: "Rozrywka bez limitu 🎬",
-      sitemap: "Mapa strony",
-      policy: "Polityka zwrotów",
-      desc: "Premium IPTV z bogatą ofertą i wygodnym oglądaniem na każdym ekranie.",
+      quickLinks: "Liens rapides",
+      contact: "Nous joindre",
+      rights: "Tous droits réservés",
+      tagline: "Divertissement illimité 🎬",
+      sitemap: "Plan du site",
+      policy: "Politique de remboursement",
+      desc: "IPTV haut de gamme avec un contenu varié et une diffusion simple sur tous vos écrans.",
     },
     policy: {
-      label: "Regulamin",
-      title: "Polityka dostawy i zwrotów",
-      sub: "Jak otrzymujesz subskrypcję, darmowy test i zasady zwrotu pieniędzy.",
+      label: "Politique",
+      title: "Politique de livraison et de remboursement",
+      sub: "Comment vous recevez votre abonnement, l'essai gratuit et le fonctionnement des remboursements.",
       sections: [
         [
-          "📩 Dostawa",
-          "IPTV Pro to usługa cyfrowa — niczego nie wysyłamy pocztą. Po potwierdzeniu płatności wysyłamy kod aktywacyjny i instrukcję konfiguracji e-mailem lub przez WhatsApp. Dostawa jest bezpłatna i zwykle trwa kilka minut, maksymalnie 24 godziny.",
+          "📩 Livraison",
+          "IPTV Pro est un service numérique : rien n'est expédié. Une fois votre paiement confirmé, nous vous envoyons votre code d'activation et les instructions d'installation par courriel ou WhatsApp. La livraison est gratuite et prend généralement quelques minutes, 24 heures au maximum.",
         ],
         [
-          "🎁 Darmowy test na 1 dzień",
-          "Przed zakupem możesz poprosić o bezpłatny 24-godzinny test, aby sprawdzić kanały, jakość obrazu i stabilność na swoich urządzeniach. Skontaktuj się z nami, aby otrzymać test.",
+          "🎁 Essai gratuit de 1 jour",
+          "Avant d'acheter, vous pouvez demander un essai gratuit de 24 heures pour vérifier les chaînes, la qualité d'image et la stabilité sur vos propres appareils. Contactez-nous pour demander votre essai.",
         ],
         [
-          "💸 Zwroty",
-          "Możesz poprosić o pełny zwrot pieniędzy w ciągu 6 dni od zakupu. Aby to zrobić, napisz do nas e-mailem lub przez WhatsApp, podając dane zamówienia. Zwrot jest bezpłatny i trafia na pierwotną metodę płatności.",
+          "💸 Remboursements",
+          "Vous pouvez demander un remboursement complet dans les 6 jours suivant votre achat. Pour ce faire, écrivez-nous par courriel ou WhatsApp avec les détails de votre commande. Le remboursement est gratuit et effectué sur votre mode de paiement d'origine.",
         ],
         [
-          "📞 Pytania",
-          "Jeśli coś jest niejasne, skontaktuj się z nami — chętnie pomożemy.",
+          "📞 Questions",
+          "Si quelque chose n'est pas clair, contactez-nous et nous vous aiderons.",
         ],
       ],
     },
     sitemap: {
-      label: "Mapa strony",
-      title: "Mapa strony",
-      sub: "Wszystkie strony serwisu w jednym miejscu: pakiety, poradniki i pomoc.",
-      pages: "Strony",
-      plans: "Pakiety",
-      blog: "Artykuły na blogu",
-      otherLanguage: "Dostępne tylko po angielsku",
-      updated: "Aktualizacja",
+      label: "Plan du site",
+      title: "Plan du site",
+      sub: "Toutes les pages de notre site au même endroit : forfaits, guides et aide.",
+      pages: "Pages",
+      plans: "Forfaits",
+      blog: "Articles du blogue",
+      otherLanguage: "Disponible en anglais seulement",
+      updated: "Mis à jour",
     },
     notFound: {
-      title: "Nie znaleziono strony",
-      text: "Strona, której szukasz, nie istnieje lub została przeniesiona.",
-      back: "Wróć na stronę główną",
+      title: "Page introuvable",
+      text: "La page que vous cherchez n'existe pas ou a été déplacée.",
+      back: "Retour à l'accueil",
     },
   },
 } as const;
