@@ -8,7 +8,7 @@ import { chip } from "@/lib/ui";
 
 export function formatDate(iso: string | undefined, locale: Locale) {
   if (!iso) return "";
-  return new Intl.DateTimeFormat(locale === "pl" ? "pl-PL" : "en-GB", { dateStyle: "long" }).format(new Date(iso));
+  return new Intl.DateTimeFormat(locale === "fr" ? "fr-CA" : "en-CA", { dateStyle: "long" }).format(new Date(iso));
 }
 
 export function CategoryChips({ post, locale }: { post: Post; locale: Locale }) {
