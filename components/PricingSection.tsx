@@ -4,7 +4,7 @@ import { hasImage, urlFor } from "@/lib/sanity/image";
 import type { Plan, PlanSection } from "@/lib/sanity/types";
 import { formatPrice } from "@/lib/site";
 import { emptyNote, section as sectionPadding, sectionHeadCenter, sectionLabel, sectionSubCenter, sectionTitle } from "@/lib/ui";
-import { EagleBackground } from "./EagleBackground";
+import { MapleLeafBackground } from "./MapleLeafBackground";
 import { PlanSlider } from "./PlanSlider";
 import { PlanCard, type PlanCardData } from "./PlanCard";
 
@@ -13,8 +13,8 @@ type Props = {
   section: PlanSection;
   /** Inner pages render their own <h1>, so the section header can be hidden. */
   showHeader?: boolean;
-  /** Show the animated eagle background (home and about pages). */
-  eagles?: boolean;
+  /** Show the animated maple-leaf background (home and about pages). */
+  leaves?: boolean;
 };
 
 export function toPlanCard(plan: Plan, locale: Locale, featuredId?: string): PlanCardData {
@@ -27,7 +27,7 @@ export function toPlanCard(plan: Plan, locale: Locale, featuredId?: string): Pla
     id: plan._id,
     href: localePath(locale, `/plans/${plan.slug}`),
     title,
-    shortDescription: t(plan.Shortdescription, locale),
+    shortDescription: t(plan.shortDescription, locale),
     description: t(plan.description, locale),
     price: formatPrice(plan.price, plan.currency),
     oldPrice: save ? formatPrice(plan.oldPrice, plan.currency) : undefined,
@@ -48,7 +48,7 @@ export function bestSellerId(plans: Plan[]) {
   return top?._id;
 }
 
-export async function PricingSection({ plans, section, showHeader = true, eagles = false }: Props) {
+export async function PricingSection({ plans, section, showHeader = true, leaves = false }: Props) {
   const { locale, ui, tr } = await getI18n();
   const featuredId = bestSellerId(plans);
   const labels = {
@@ -63,9 +63,9 @@ export async function PricingSection({ plans, section, showHeader = true, eagles
 
   return (
     <section id="plans" className={`${sectionPadding} relative isolate scroll-mt-20 overflow-hidden bg-bg`}>
-      {eagles && (
+      {leaves && (
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <EagleBackground />
+          <MapleLeafBackground />
         </div>
       )}
       {showHeader ? (
