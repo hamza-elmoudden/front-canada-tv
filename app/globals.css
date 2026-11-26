@@ -1,24 +1,63 @@
 @import "tailwindcss";
 
-/* Design tokens, ported from desing_exsample/iptv-site.html */
+/* Design tokens. Colour system: four palettes (see :root gradients below).
+   - Generic gradient  scarlet → ruby → orchid → amethyst → cobalt → deep: the page spectrum (bg-flow).
+   - Matching gradient flamingo → magenta → periwinkle → azure → cerulean: highlights (bg-vivid, text-vivid).
+   - Spot palette      peach, cream, lagoon: small accents and decorative details.
+   - Twisted spot      lagoon, ice, harbor: secondary surfaces, borders, supporting UI. */
 :root {
   --nav-h: 72px;
   color-scheme: dark;
+
+  --gradient-spectrum: linear-gradient(120deg, #ff0000 0%, #ee005f 20%, #b62a8f 40%, #6d4b9a 60%, #325082 80%, #2f4858 100%);
+  --gradient-vivid: linear-gradient(120deg, #ff006f 0%, #dc00c9 25%, #4a62ff 50%, #0082ff 75%, #008be4 100%);
+  /* Bridge between both palettes; every stop keeps white text above 4.3:1, so it carries buttons/badges. */
+  --gradient-cta: linear-gradient(120deg, #ee005f 0%, #b62a8f 35%, #6d4b9a 70%, #4a62ff 100%);
+  --gradient-spot: linear-gradient(90deg, #e8a392, #5ab7d4);
 }
 
 @theme inline {
   --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
 }
 
-@theme {
-  --color-bg: #0d0810;
-  --color-fg: #f0e8ea;
-  --color-muted: #bfa5a4;
-  --color-crimson: #dc143c;
-  --color-teal: #0093d5;
-  --color-teal-light: #5cb6d6;
-  --color-violet: #5c4b8a;
-  --color-steel: #344e76;
+@theme static {
+  /* Base */
+  --color-bg: #0b0d16;
+  --color-fg: #f4eef1;
+  --color-muted: #b9b6c8;
+
+  /* Generic gradient */
+  --color-scarlet: #ff0000;
+  --color-ruby: #ee005f;
+  --color-orchid: #b62a8f;
+  --color-amethyst: #6d4b9a;
+  --color-cobalt: #325082;
+  --color-deep: #2f4858;
+
+  /* Matching gradient */
+  --color-flamingo: #ff006f;
+  --color-magenta: #dc00c9;
+  --color-periwinkle: #4a62ff;
+  --color-azure: #0082ff;
+  --color-cerulean: #008be4;
+
+  /* Spot + twisted spot */
+  --color-peach: #e8a392;
+  --color-cream: #ffe6d9;
+  --color-lagoon: #5ab7d4;
+  --color-ice: #c2f9ff;
+  --color-harbor: #487e91;
+
+  /* Page spectrum: each generic stop as a dark tint of bg. main runs flow-0 → flow-5 top to bottom,
+     the footer continues flow-5 → bg, so neighbouring sections always share their boundary colour. */
+  --color-flow-0: color-mix(in oklab, var(--color-scarlet) 14%, var(--color-bg));
+  --color-flow-1: color-mix(in oklab, var(--color-ruby) 14%, var(--color-bg));
+  --color-flow-2: color-mix(in oklab, var(--color-orchid) 15%, var(--color-bg));
+  --color-flow-3: color-mix(in oklab, var(--color-amethyst) 18%, var(--color-bg));
+  --color-flow-4: color-mix(in oklab, var(--color-cobalt) 22%, var(--color-bg));
+  --color-flow-5: color-mix(in oklab, var(--color-deep) 32%, var(--color-bg));
+  /* Opaque fill behind gradient borders (border-vivid). */
+  --color-surface: color-mix(in oklab, var(--color-amethyst) 16%, var(--color-bg));
 
   --animate-pulse-dot: pulse-dot 2s infinite;
   --animate-hue-text: hue-text 12s ease-in-out infinite;
@@ -41,15 +80,15 @@
   }
   @keyframes hue-text {
     0%, 100% { color: var(--color-fg); }
-    25% { color: var(--color-teal-light); }
-    50% { color: var(--color-crimson); }
-    75% { color: var(--color-violet); }
+    25% { color: var(--color-ice); }
+    50% { color: var(--color-peach); }
+    75% { color: var(--color-lagoon); }
   }
   @keyframes word-hue {
-    0%, 100% { color: var(--color-crimson); }
-    25% { color: var(--color-teal-light); }
-    50% { color: var(--color-violet); }
-    75% { color: var(--color-teal); }
+    0%, 100% { color: var(--color-flamingo); }
+    25% { color: var(--color-lagoon); }
+    50% { color: var(--color-peach); }
+    75% { color: var(--color-ice); }
   }
   @keyframes rainbow-shift {
     0%, 100% { background-position: 0% 50%; }
@@ -62,6 +101,72 @@
   @keyframes scroll-rtl {
     0% { transform: translateX(-50%); }
     100% { transform: translateX(0); }
+  }
+}
+
+/* ---- Gradient utilities ---- */
+
+/* The page-long spectrum painted on <main>. */
+@utility bg-flow {
+  background-color: var(--color-bg);
+  background-image: linear-gradient(
+    180deg,
+    var(--color-flow-0) 0%,
+    var(--color-flow-1) 18%,
+    var(--color-flow-2) 38%,
+    var(--color-flow-3) 58%,
+    var(--color-flow-4) 80%,
+    var(--color-flow-5) 100%
+  );
+}
+@utility bg-spectrum {
+  background-image: var(--gradient-spectrum);
+}
+@utility bg-vivid {
+  background-image: var(--gradient-vivid);
+}
+/* Buttons/badges: 200% wide so hover can slide toward the cooler end. */
+@utility bg-cta {
+  background-image: var(--gradient-cta);
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+}
+@utility text-vivid {
+  background-image: var(--gradient-vivid);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@utility text-spot {
+  background-image: var(--gradient-spot);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* 1px gradient border on an opaque surface (set --fill to change the inside colour). */
+@utility border-vivid {
+  border-color: transparent;
+  background:
+    linear-gradient(var(--fill, var(--color-surface)), var(--fill, var(--color-surface))) padding-box,
+    var(--gradient-vivid) border-box;
+}
+
+/* 12-month plan card: 2px gold → peach → flamingo gradient border on a warm fill. */
+@utility border-gold {
+  border-color: transparent;
+  background:
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-peach) 16%, var(--color-bg)), var(--color-surface)) padding-box,
+    linear-gradient(135deg, #ffd27a 0%, var(--color-peach) 35%, var(--color-flamingo) 70%, #ffd27a 100%) border-box;
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-lagoon);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--color-flamingo) 40%, transparent);
+    color: #fff;
   }
 }
 
