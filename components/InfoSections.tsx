@@ -27,8 +27,8 @@ export async function InfoSections({ sections, features, id = "about", leaves = 
   return (
     <section id={id} className={`${section} relative isolate overflow-hidden`}>
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 opacity-35 animate-rainbow bg-size-[400%_400%] bg-[linear-gradient(120deg,var(--color-crimson),var(--color-violet),var(--color-teal),var(--color-steel),var(--color-crimson))]" />
-        <div className="absolute inset-0 opacity-35 [animation-delay:-7s] mask-[linear-gradient(90deg,transparent_25%,#000_75%)] max-md:mask-[linear-gradient(180deg,transparent_25%,#000_75%)] animate-rainbow bg-size-[400%_400%] bg-[linear-gradient(120deg,var(--color-crimson),var(--color-violet),var(--color-teal),var(--color-steel),var(--color-crimson))]" />
+        {/* Matching-gradient overlay on top of the page spectrum; faded at top and bottom so it blends into the neighbouring sections. */}
+        <div className="absolute inset-0 opacity-25 animate-rainbow bg-size-[400%_400%] bg-[linear-gradient(120deg,var(--color-flamingo),var(--color-magenta),var(--color-periwinkle),var(--color-azure),var(--color-cerulean),var(--color-flamingo))] mask-[linear-gradient(180deg,transparent,#000_20%,#000_80%,transparent)] motion-reduce:animate-none" />
         {leaves && <MapleLeafBackground />}
       </div>
       {items.map((s, i) => {
@@ -59,8 +59,8 @@ export async function InfoSections({ sections, features, id = "about", leaves = 
             </div>
 
             <div className={`relative max-md:order-1 ${imageLeft ? "order-1" : "order-2"}`}>
-              <div className="pointer-events-none absolute -inset-2 rounded-3xl border border-teal/20" />
-              <div className="pointer-events-none absolute -inset-px z-1 rounded-[20px] bg-linear-135 from-crimson/15 via-teal/10 to-transparent to-60%" />
+              <div className="pointer-events-none absolute -inset-2 rounded-3xl border border-lagoon/20" />
+              <div className="pointer-events-none absolute -inset-px z-1 rounded-[20px] bg-linear-135 from-ruby/15 via-lagoon/10 to-transparent to-60%" />
               {s && hasImage(s.image) ? (
                 <Image
                   src={urlFor(s.image).width(1200).url()}
