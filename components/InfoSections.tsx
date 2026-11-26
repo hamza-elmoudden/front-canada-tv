@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Fragment } from "react";
+import { DeviceMockup } from "@/components/DeviceMockup";
 import { MapleLeafBackground } from "@/components/MapleLeafBackground";
 import { WaveDivider } from "@/components/WaveDivider";
 import { altText } from "@/lib/i18n";
@@ -17,11 +18,13 @@ type Props = {
   id?: string;
   /** Show the animated maple-leaf background (home and about pages). */
   leaves?: boolean;
+  /** Replace the first section's image with the animated device mockup (home page). */
+  mockup?: boolean;
 };
 
 /** "About" block(s) driven by Sanity `infoSection` documents. */
-export async function InfoSections({ sections, features, id = "about", leaves = false }: Props) {
-  const { ui, tr } = await getI18n();
+export async function InfoSections({ sections, features, id = "about", leaves = false, mockup = false }: Props) {
+  const { locale, ui, tr } = await getI18n();
   const items: (InfoSection | null)[] = sections.length ? sections : [null];
 
   return (
@@ -36,12 +39,13 @@ export async function InfoSections({ sections, features, id = "about", leaves = 
         const text = s ? tr(s.text) : "";
         const imageLeft = s?.imagePosition === "left";
         const alt = s && title ? altText(ui.alt.section, title) : ui.about.imageAlt;
+        const showMockup = mockup && i === 0;
 
         return (
           <Fragment key={s?._id ?? i}>
           {i > 0 && <WaveDivider variant={i % 2 ? "g" : "f"} />}
-          <div className="relative mx-auto grid max-w-[1200px] grid-cols-2 items-center gap-20 not-first:mt-24 max-lg:gap-12 max-md:grid-cols-1">
-            <div className={`max-md:order-2 ${imageLeft ? "order-2" : "order-1"}`}>
+          <div className={`relative mx-auto grid max-w-[1200px] grid-cols-2 items-center gap-20 not-first:mt-24 max-lg:gap-12 ${showMockup ? "max-lg:grid-cols-1" : "max-md:grid-cols-1"}`}>
+            <div className={`${showMockup ? "max-lg:order-2" : "max-md:order-2"} ${imageLeft ? "order-2" : "order-1"}`}>
               {i === 0 && <span className={sectionLabel}>{ui.about.label}</span>}
               <h2 className={sectionTitle}>{title}</h2>
               {text && <p className={sectionSub}>{text}</p>}
@@ -58,6 +62,11 @@ export async function InfoSections({ sections, features, id = "about", leaves = 
               )}
             </div>
 
+            {showMockup ? (
+              <div className={`min-w-0 max-lg:order-1 ${imageLeft ? "order-1" : "order-2"}`}>
+                <DeviceMockup locale={locale} />
+              </div>
+            ) : (
             <div className={`relative max-md:order-1 ${imageLeft ? "order-1" : "order-2"}`}>
               <div className="pointer-events-none absolute -inset-2 rounded-3xl border border-lagoon/20" />
               <div className="pointer-events-none absolute -inset-px z-1 rounded-[20px] bg-linear-135 from-ruby/15 via-lagoon/10 to-transparent to-60%" />
@@ -81,6 +90,7 @@ export async function InfoSections({ sections, features, id = "about", leaves = 
                 />
               )}
             </div>
+            )}
           </div>
           </Fragment>
         );
